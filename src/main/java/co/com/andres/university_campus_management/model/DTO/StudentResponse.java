@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "respuesta de la informacion del estudiante")
 public record StudentResponse(
-@Schema (description ="identificador unico del estudiante", example = 1)
+@Schema (description ="identificador unico del estudiante", example = "1")
         Long idStudent,
 
         @Schema(description = "nombre del estudiante", example = "Luis Andres")
