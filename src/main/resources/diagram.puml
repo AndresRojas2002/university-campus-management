@@ -1,0 +1,55 @@
+@startuml
+
+entity "Student"{
+    * idStudent : Long <<PK>>
+    --
+    * name : String
+    * lastName : String
+    * email : String <<unique>>
+    * address : String
+    * phone : String
+    * studentNumber : String <<unique>>
+    
+
+}
+
+entity "Course"{
+    * idCourse : Long <<PK>>
+    --
+    * name : String
+    * CourseCode : String <<unique>>
+    * description : String
+    * maxCapacity : Integer
+    * professor : Long <<FK>>
+
+}
+
+entity "Professor"{
+    idProfessor : Long <<PK>>
+    * name : String
+    * lastName : String
+    * email : String <<unique>>
+    * address : String
+    * phone : String
+}
+
+entity "Enrollment"{
+    * idEnrollment : Long <<PK>>
+    * student : Long <<FK>>
+    * course : Long <<FK>>
+    * registrationDate : LocalDate
+    * registrationStatus : registrationStatus
+}
+
+enum RegistrationStatus{
+    ACTIVE
+    COMPLETE
+    RETIRED
+}
+
+Student "1" -- "N" Enrollment : "tiene"
+Course "1" -- "N" Enrollment : "contiene"
+Professor "1" -- "N" Course : "imparte"
+RegistrationStatus -- Enrollment : "define estado"
+
+@enduml
