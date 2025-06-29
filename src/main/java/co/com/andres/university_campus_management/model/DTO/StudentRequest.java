@@ -134,21 +134,7 @@ public record StudentRequest(
         return studentNumber != null && studentNumber.matches("^[0-9]{8,10}$");
     }
 
-    /**
-     * Valida que todos los campos requeridos estén presentes y no estén vacíos.
-     * Verifica que name, lastName, email, address, phone y studentNumber
-     * tengan valores válidos.
-     * 
-     * @return true si todos los campos son válidos, false en caso contrario
-     */
-    public boolean isValid() {
-        return name != null && !name.trim().isEmpty() &&
-                lastName != null && !lastName.trim().isEmpty() &&
-                email != null && !email.trim().isEmpty() &&
-                address != null && !address.trim().isEmpty() &&
-                phone != null && !phone.trim().isEmpty() &&
-                studentNumber != null && !studentNumber.trim().isEmpty();
-    }
+    
 
     /**
      * Obtiene el nombre completo del estudiante con formato adecuado.

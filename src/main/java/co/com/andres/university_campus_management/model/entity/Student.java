@@ -28,7 +28,7 @@ public class Student {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String idStudent;
+    private Long idStudent;
 
     /**
      * Nombre del estudiante.
@@ -74,11 +74,5 @@ public class Student {
     @Column(name = "student_number", nullable = false, unique = true)
     private String studentNumber;
 
-    /**
-     * Edad del estudiante en años.
-     * Campo opcional para registro demográfico.
-     */
-    @Column(name = "years")
-    private Integer years;
-
+   
 }
