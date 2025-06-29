@@ -17,6 +17,8 @@ import jakarta.validation.constraints.NotBlank;
  * @version 1.0
  * @since 2024
  */
+
+ @Schema (description = "DTO para la creacion y actualizacion de estudiantes")
 public record StudentRequest(
         /**
          * Nombre del estudiante.
@@ -82,9 +84,9 @@ public record StudentRequest(
          * Campo obligatorio que debe tener entre 8 y 10 dígitos numéricos.
          */
         @Schema(
-            description = "Número de estudiante asignado por la universidad", 
-          example = "2024001234", 
-          required = true) 
+            description = "Número del estudiante", 
+            example = "2024001234", 
+            required = true) 
         @JsonProperty("student_Number") 
         @NotBlank(message = "EL NÚMERO DE ESTUDIANTE ES UN CAMPO OBLIGATORIO Y DEBE TENER ENTRE 8 Y 10 DÍGITOS")
         String studentNumber
