@@ -2,8 +2,8 @@ package co.com.andres.university_campus_management.service;
 
 import java.util.List;
 
-import co.com.andres.university_campus_management.model.DTO.StudentRequest;
 import co.com.andres.university_campus_management.model.DTO.StudentResponse;
+import co.com.andres.university_campus_management.model.DTO.StudentRequest;
 
 /**
  * Interfaz de servicio para la gestión de estudiantes en el sistema universitario.

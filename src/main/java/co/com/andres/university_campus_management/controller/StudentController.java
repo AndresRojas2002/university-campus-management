@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.andres.university_campus_management.model.DTO.StudentRequest;
 import co.com.andres.university_campus_management.model.DTO.StudentResponse;
+import co.com.andres.university_campus_management.model.DTO.StudentRequest;
 import co.com.andres.university_campus_management.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
