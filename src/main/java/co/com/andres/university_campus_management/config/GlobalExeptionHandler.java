@@ -5,11 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import co.com.andres.university_campus_management.config.exception.studentException.StudentNumberExistException;
+import co.com.andres.university_campus_management.config.exception.couseException.CourseByIdException;
+import co.com.andres.university_campus_management.config.exception.couseException.CourseCodeValidException;
+import co.com.andres.university_campus_management.config.exception.couseException.CourseMaxCapacityValidException;
+import co.com.andres.university_campus_management.config.exception.couseException.CourseWithCodeExistException;
 import co.com.andres.university_campus_management.config.exception.studentException.EmailValidException;
 import co.com.andres.university_campus_management.config.exception.studentException.NumberValidExeption;
 import co.com.andres.university_campus_management.config.exception.studentException.PhoneValidException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentByIdException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentNumberExistException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentWithEmailExistException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -162,5 +166,73 @@ public class GlobalExeptionHandler {
     public ResponseEntity<ApiErrorResponse> handlerExeption(Exception ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ApiErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), request.getRequestURI()));
+    }
+
+    /**
+     * Maneja excepciones cuando no se encuentra un curso por ID.
+     * 
+     * Se activa cuando se intenta acceder a un curso con un ID que no existe
+     * en el sistema.
+     * 
+     * @param ex La excepción CourseByIdException capturada
+     * @param request La solicitud HTTP que generó la excepción
+     * @return ResponseEntity con código 404 (NOT_FOUND) y detalles del error
+     */
+    @ExceptionHandler
+    public ResponseEntity<ApiErrorResponse> handlerCourseByIdException(CourseByIdException ex,
+            HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ApiErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request.getRequestURI()));
+    }
+
+    /**
+     * Maneja excepciones cuando ya existe un curso con el mismo código.
+     * 
+     * Se activa cuando se intenta crear o actualizar un curso con un código
+     * que ya está registrado en el sistema.
+     * 
+     * @param ex La excepción CourseWithCodeExistException capturada
+     * @param request La solicitud HTTP que generó la excepción
+     * @return ResponseEntity con código 409 (CONFLICT) y detalles del error
+     */
+    @ExceptionHandler
+    public ResponseEntity<ApiErrorResponse> handlerCourseWithCodeExistException(CourseWithCodeExistException ex,
+            HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ApiErrorResponse(HttpStatus.CONFLICT, ex.getMessage(), request.getRequestURI()));
+    }
+
+    /**
+     * Maneja excepciones de validación del código del curso.
+     * 
+     * Se activa cuando el código del curso no cumple con el formato requerido
+     * (3-4 letras mayúsculas seguido de un guión y 3 dígitos).
+     * 
+     * @param ex La excepción CourseCodeValidException capturada
+     * @param request La solicitud HTTP que generó la excepción
+     * @return ResponseEntity con código 400 (BAD_REQUEST) y detalles del error
+     */
+    @ExceptionHandler
+    public ResponseEntity<ApiErrorResponse> handlerCourseCodeValidException(CourseCodeValidException ex,
+            HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI()));
+    }
+
+    /**
+     * Maneja excepciones de validación de la capacidad máxima del curso.
+     * 
+     * Se activa cuando la capacidad máxima del curso no está dentro del rango
+     * permitido (entre 1 y 50 estudiantes).
+     * 
+     * @param ex La excepción CourseMaxCapacityValidException capturada
+     * @param request La solicitud HTTP que generó la excepción
+     * @return ResponseEntity con código 400 (BAD_REQUEST) y detalles del error
+     */
+    @ExceptionHandler
+    public ResponseEntity<ApiErrorResponse> handlerCourseMaxCapacityValidException(CourseMaxCapacityValidException ex,
+            HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI()));
     }
 }
