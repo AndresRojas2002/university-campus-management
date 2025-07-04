@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import co.com.andres.university_campus_management.config.exception.EmailValidException;
-import co.com.andres.university_campus_management.config.exception.NumberValidExeption;
-import co.com.andres.university_campus_management.config.exception.PhoneValidException;
-import co.com.andres.university_campus_management.config.exception.StudentByIdException;
-import co.com.andres.university_campus_management.config.exception.StudentNumberExistException;
-import co.com.andres.university_campus_management.config.exception.StudentWithEmailExistException;
+import co.com.andres.university_campus_management.config.exception.studentException.EmailValidException;
+import co.com.andres.university_campus_management.config.exception.studentException.NumberValidExeption;
+import co.com.andres.university_campus_management.config.exception.studentException.PhoneValidException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentByIdException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentNumberExistException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentWithEmailExistException;
 import co.com.andres.university_campus_management.mapper.StudentMapper;
 import co.com.andres.university_campus_management.model.DTO.StudentRequest;
 import co.com.andres.university_campus_management.model.DTO.StudentResponse;

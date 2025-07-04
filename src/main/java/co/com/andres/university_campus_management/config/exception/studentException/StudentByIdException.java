@@ -1,4 +1,4 @@
-package co.com.andres.university_campus_management.config.exception;
+package co.com.andres.university_campus_management.config.exception.studentException;
 
 /**
  * Excepción personalizada que se lanza cuando no se encuentra un estudiante
