@@ -12,13 +12,13 @@ package co.com.andres.university_campus_management.config.exception.studentExcep
  * @version 1.0
  * @since 2024
  */
-public class EmailValidException extends RuntimeException{
+public class StudentWintEmailValidException extends RuntimeException{
   
     /**
      * Constructor por defecto que inicializa la excepción con un mensaje
      * descriptivo sobre el formato requerido para el correo electrónico.
      */
-    public EmailValidException() {
+    public StudentWintEmailValidException() {
         super("EL CORREO ELECTRÓNICO NO ES VÁLIDO. DEBE TERMINAR EN @universidad.com");
     }
 }

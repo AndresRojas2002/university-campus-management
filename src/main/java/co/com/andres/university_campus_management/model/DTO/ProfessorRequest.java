@@ -67,5 +67,38 @@ public record ProfessorRequest(
     @NotBlank(message = "LA DIRECCIÓN ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
     String address
 ) {
+    /**
+     * Constructor compacto del record ProfessorRequest.
+     * Se ejecuta automáticamente al crear una nueva instancia del record.
+     * 
+     * Este constructor se encarga de inicializar el campo phone con un valor por defecto
+     * cuando no se proporciona un número de teléfono, asegurando que el campo nunca sea null.
+     */
+    public ProfessorRequest {
+        if (phone == null) {
+            phone = "no especificado";
+        }
+    }
+
+
+      /**
+     * Valida que el email tenga formato válido de dominio universitario.
+     * El email debe terminar en @universidad.com
+     * 
+     * @return true si el email tiene formato válido, false en caso contrario
+     */
+    public boolean isValidEmail() {
+        return email.matches("^[A-Za-z0-9+_.-]+@universidad\\.com$");
+    }
+
+      /**
+     * Valida que el número de teléfono tenga formato válido.
+     * Acepta números de 7 a 15 dígitos, opcionalmente precedidos por '+'.
+     * 
+     * @return true si el teléfono tiene formato válido, false en caso contrario
+     */
+    public boolean isValidPhone() {
+        return phone != null && phone.matches("^\\+?[0-9]{7,15}$");
+    }
 
 }
