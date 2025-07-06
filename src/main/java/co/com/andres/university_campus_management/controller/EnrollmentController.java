@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.com.andres.university_campus_management.model.DTO.EnrollmentRequest;
 import co.com.andres.university_campus_management.model.DTO.EnrollmentResponse;
+import co.com.andres.university_campus_management.model.entity.EnrollmentState;
 import co.com.andres.university_campus_management.service.EnrollmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,10 +28,8 @@ import lombok.RequiredArgsConstructor;
  * Controlador REST para la gestión de matrículas en el sistema universitario.
  * 
  * Esta clase proporciona endpoints HTTP para realizar operaciones CRUD
- * completas
- * sobre la entidad Enrollment, incluyendo creación, lectura, actualización y
- * eliminación
- * de matrículas, así como búsquedas personalizadas.
+ * completas sobre la entidad Enrollment, incluyendo creación, lectura, actualización y
+ * eliminación de matrículas, así como búsquedas personalizadas.
  * 
  * Los endpoints están documentados con Swagger/OpenAPI y manejan validaciones
  * de entrada, códigos de estado HTTP apropiados y respuestas estructuradas.
@@ -58,8 +57,7 @@ public class EnrollmentController {
     @Operation(summary = "Crear matrícula", description = "Crea una nueva matrícula en el sistema")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Matrícula creada exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos"),
-
+            @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos")
     })
     public EnrollmentResponse create(@Valid @RequestBody EnrollmentRequest enrollmentRequest) {
         return enrollmentService.createEnrollment(enrollmentRequest);
@@ -74,8 +72,7 @@ public class EnrollmentController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Obtener todas las matrículas", description = "Retorna una lista con todas las matrículas registradas")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista de matrículas obtenida exitosamente"),
-
+            @ApiResponse(responseCode = "200", description = "Lista de matrículas obtenida exitosamente")
     })
     public List<EnrollmentResponse> getAll() {
         return enrollmentService.getAllEnrollments();
@@ -92,7 +89,7 @@ public class EnrollmentController {
     @Operation(summary = "Obtener matrícula por ID", description = "Busca una matrícula específica por su identificador único")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Matrícula encontrada exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
+            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada")
     })
     public EnrollmentResponse getById(@PathVariable Long idEnrollment) {
         return enrollmentService.getEnrollmentById(idEnrollment);
@@ -109,7 +106,7 @@ public class EnrollmentController {
     @Operation(summary = "Obtener matrícula por estudiante", description = "Busca una matrícula específica por el ID del estudiante")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Matrícula encontrada exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
+            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada")
     })
     public EnrollmentResponse getByStudentId(@PathVariable Long idStudent) {
         return enrollmentService.getEnrollmentByStudentId(idStudent);
@@ -126,7 +123,7 @@ public class EnrollmentController {
     @Operation(summary = "Obtener matrícula por curso", description = "Busca una matrícula específica por el ID del curso")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Matrícula encontrada exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
+            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada")
     })
     public EnrollmentResponse getByCourseId(@PathVariable Long idCourse) {
         return enrollmentService.getEnrollmentByCourseId(idCourse);
@@ -135,7 +132,7 @@ public class EnrollmentController {
     /**
      * Actualiza la información de una matrícula existente.
      * 
-     * @param id                Identificador único de la matrícula a actualizar
+     * @param id Identificador único de la matrícula a actualizar
      * @param enrollmentRequest Datos actualizados de la matrícula
      * @return EnrollmentResponse con la información de la matrícula actualizada
      */
@@ -145,8 +142,7 @@ public class EnrollmentController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Matrícula actualizada exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos"),
-            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
-
+            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada")
     })
     public EnrollmentResponse update(@PathVariable Long id, @Valid @RequestBody EnrollmentRequest enrollmentRequest) {
         return enrollmentService.updateEnrollment(id, enrollmentRequest);
@@ -162,10 +158,27 @@ public class EnrollmentController {
     @Operation(summary = "Eliminar matrícula", description = "Elimina una matrícula del sistema")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Matrícula eliminada exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
-
+            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada")
     })
     public void delete(@PathVariable Long id) {
         enrollmentService.deleteEnrollment(id);
+    }
+
+    /**
+     * Busca matrículas por estado específico.
+     * 
+     * @param state Estado de la matrícula a buscar (ACTIVE, CANCELLED, GRADUATED)
+     * @return Lista de matrículas con el estado especificado
+     */
+    @GetMapping("/state/{state}")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Buscar matrículas por estado", description = "Busca todas las matrículas que tengan un estado específico")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Matrículas encontradas exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Estado inválido"),
+            @ApiResponse(responseCode = "404", description = "No se encontraron matrículas con ese estado")
+    })
+    public List<EnrollmentResponse> getByState(@PathVariable EnrollmentState state) {
+        return enrollmentService.getEnrollmentByState(state);
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import co.com.andres.university_campus_management.model.DTO.EnrollmentRequest;
 import co.com.andres.university_campus_management.model.DTO.EnrollmentResponse;
+import co.com.andres.university_campus_management.model.entity.EnrollmentState;
 
 
 /**
@@ -78,4 +79,12 @@ public interface EnrollmentService {
      * @param idEnrollment Identificador único de la matrícula a eliminar
      */
     void deleteEnrollment(Long idEnrollment);
+
+    /**
+     * Obtiene todas las matrículas por estado específico.
+     * 
+     * @param state Estado de la matrícula a buscar
+     * @return List<EnrollmentResponse> Lista de matrículas con el estado especificado
+     */
+    List<EnrollmentResponse> getEnrollmentByState(EnrollmentState state);
 }
