@@ -115,12 +115,12 @@ public record StudentRequest(
 
     /**
      * Valida que el número de teléfono tenga formato válido.
-     * Acepta números de 7 a 15 dígitos, opcionalmente precedidos por '+'.
+     * Acepta números de 7 a 20 dígitos, opcionalmente precedidos por '+'.
      * 
      * @return true si el teléfono tiene formato válido, false en caso contrario
      */
     public boolean isValidPhone() {
-        return phone != null && phone.matches("^\\+?[0-9]{7,15}$");
+        return phone != null && phone.matches("^\\+?[0-9]{7,20}$");
     }
 
     /**
@@ -134,27 +134,5 @@ public record StudentRequest(
         return studentNumber != null && studentNumber.matches("^[0-9]{8,10}$");
     }
 
-    
-
-    /**
-     * Obtiene el nombre completo del estudiante con formato adecuado.
-     * Elimina espacios extra y concatena nombre y apellido correctamente.
-     * 
-     * @return String con el nombre completo formateado
-     */
-    public String getFullName() {
-        return String.format("%s %s", name, lastName).trim();
-    }
-
-    /**
-     * Genera un resumen de la información del estudiante.
-     * Incluye nombre completo, número de estudiante y email.
-     * 
-     * @return String con la información resumida del estudiante
-     */
-    public String getStudentSummary() {
-        return String.format("Estudiante: %s - Número: %s - Email: %s",
-                getFullName(), studentNumber, email);
-    }
 
 }

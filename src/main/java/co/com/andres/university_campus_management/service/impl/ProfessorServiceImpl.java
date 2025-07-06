@@ -132,9 +132,9 @@ public class ProfessorServiceImpl implements ProfessorService {
             throw new ProfessorWithPhoneValidException();
         }
 
-        // Verificar que el email no exista en otro profesor
+        // Verificar que el email no exista en otro profesor (excluyendo el actual)
         var emailProfessor = professorRepository.findByEmail(professorRequest.email());
-        if (emailProfessor.isPresent()) {
+        if (emailProfessor.isPresent() && !emailProfessor.get().getIdProfessor().equals(id)) {
             throw new ProfessorWithEmailExistException();
         }
 

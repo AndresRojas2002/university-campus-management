@@ -35,6 +35,7 @@ public interface CourseMapper {
      * @param course Entidad del curso a convertir
      * @return DTO de respuesta con los datos del curso
      */
+    @Mapping(target = "professorId", ignore = true)
     CourseResponse toResponse(Course course);
     
 }

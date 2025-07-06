@@ -38,7 +38,7 @@ public record ProfessorRequest(
      */
     @Schema(
         description = "Correo electrónico del profesor", 
-        example = "andres.rojas@universidad.edu.co", 
+        example = "andres.rojas@universidad.com", 
         required = true) 
     @JsonProperty("email")
     @NotBlank(message = "EL CORREO ELECTRÓNICO ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
@@ -93,12 +93,12 @@ public record ProfessorRequest(
 
       /**
      * Valida que el número de teléfono tenga formato válido.
-     * Acepta números de 7 a 15 dígitos, opcionalmente precedidos por '+'.
+     * Acepta números de 7 a 20 dígitos, opcionalmente precedidos por '+'.
      * 
      * @return true si el teléfono tiene formato válido, false en caso contrario
      */
     public boolean isValidPhone() {
-        return phone != null && phone.matches("^\\+?[0-9]{7,15}$");
+        return phone != null && phone.matches("^\\+?[0-9]{7,20}$");
     }
 
 }

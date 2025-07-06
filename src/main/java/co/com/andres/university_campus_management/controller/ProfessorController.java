@@ -17,7 +17,7 @@ import co.com.andres.university_campus_management.model.DTO.ProfessorRequest;
 import co.com.andres.university_campus_management.model.DTO.ProfessorResponse;
 import co.com.andres.university_campus_management.service.ProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -134,7 +134,7 @@ public class ProfessorController {
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public ProfessorResponse update(@Valid @PathVariable("id") Long id, @RequestBody ProfessorRequest professorRequest) {
+    public ProfessorResponse update(@PathVariable("id") Long id, @Valid @RequestBody ProfessorRequest professorRequest) {
         return professorService.updateProfessor(id, professorRequest);
     }
 

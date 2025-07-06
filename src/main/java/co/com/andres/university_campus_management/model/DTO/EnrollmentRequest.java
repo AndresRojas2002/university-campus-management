@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import co.com.andres.university_campus_management.model.entity.Course;
+import co.com.andres.university_campus_management.model.entity.Student;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -32,7 +35,7 @@ public record EnrollmentRequest(
             required = true) 
         @JsonProperty("student_id") 
         @NotNull(message = "EL ID DEL ESTUDIANTE ES UN CAMPO OBLIGATORIO Y NO PUEDE SER NULO")
-        Long idStudent,
+        Student student,
 
         /**
          * Identificador único del curso.
@@ -44,7 +47,7 @@ public record EnrollmentRequest(
             required = true) 
         @JsonProperty("course_id")
         @NotNull(message = "EL ID DEL CURSO ES UN CAMPO OBLIGATORIO Y NO PUEDE SER NULO")
-        Long idCourse,
+        Course course,
 
         /**
          * Fecha de matrícula del estudiante.
@@ -74,16 +77,18 @@ public record EnrollmentRequest(
      * @return true si el ID es válido, false en caso contrario
      */
     public boolean isValidIdStudent() {
-        return idStudent != null && idStudent > 0;
+        return student != null && student.getIdStudent() > 0;
     }
+    
 
     /**
      * Valida que el ID del curso sea válido.
      * @return true si el ID es válido, false en caso contrario
      */
     public boolean isValidIdCourse() {
-        return idCourse != null && idCourse > 0;
+        return course != null && course.getIdCourse() > 0;
     }
+    
 
     /**
      * Valida que la fecha de matrícula sea válida y contenga un formato válido.
@@ -95,3 +100,4 @@ public record EnrollmentRequest(
                enrollmentDate.toString().matches("\\d{4}-\\d{2}-\\d{2}");
     }
 }
+

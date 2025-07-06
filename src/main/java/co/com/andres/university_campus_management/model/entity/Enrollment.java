@@ -24,12 +24,12 @@ public class Enrollment {
     private Long  idEnrollment;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student studentId;
+    @JoinColumn(name = "student")
+    private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course courseId;
+    @JoinColumn(name = "course")
+    private Course course;
 
     @Column(name = "enrollment_date")
     private LocalDate enrollmentDate;

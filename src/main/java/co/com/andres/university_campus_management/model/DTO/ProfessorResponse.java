@@ -30,7 +30,7 @@ public record ProfessorResponse(
      * Correo electrónico del profesor.
      * Campo obligatorio que debe tener formato válido de email.
      */
-    @Schema(description = "Correo electrónico del profesor", example = "andres.rojas@universidad.edu.co") 
+    @Schema(description = "Correo electrónico del profesor", example = "andres.rojas@universidad.com") 
     String email,
 
     /**

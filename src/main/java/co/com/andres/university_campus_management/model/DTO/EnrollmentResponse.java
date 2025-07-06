@@ -25,7 +25,7 @@ public record EnrollmentResponse(
         example = "1",
         required = true
     )   
-    Long idStudent,
+    Long studentId,
 
     /**
      * Identificador único del curso.
@@ -35,7 +35,7 @@ public record EnrollmentResponse(
         example = "1",
         required = true
     )
-    Long idCourse,
+    Long courseId,
 
     /**
      * Fecha de matrícula del estudiante.

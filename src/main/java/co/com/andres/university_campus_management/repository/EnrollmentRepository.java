@@ -26,7 +26,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
      * @param studentId Identificador del estudiante
      * @return Lista de matrículas del estudiante
      */
-    Optional<Enrollment> findByStudentId(Long studentId);
+    Optional<Enrollment> findByStudent_idStudent(Long studentId);
 
     /**
      * Busca todas las matrículas de un curso específico.
@@ -34,7 +34,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
      * @param courseId Identificador del curso
      * @return Lista de matrículas del curso
      */
-    Optional<Enrollment> findByCourseId(Long courseId);
+    Optional<Enrollment> findByCourse_idCourse(Long courseId);
 
     /**
      * Busca matrículas por estado específico.

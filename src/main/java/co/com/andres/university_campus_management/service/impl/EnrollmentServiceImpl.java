@@ -109,7 +109,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
      */
     @Override
     public EnrollmentResponse getEnrollmentByCourseId(Long idCourse) {
-        return enrollmentRepository.findByCourseId(idCourse)
+        return enrollmentRepository.findByCourse_idCourse(idCourse)
                 .map(enrollmentMapper::toResponse)
                 .orElseThrow(() -> new CourseByIdException());
     }
@@ -123,7 +123,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
      */
     @Override
     public EnrollmentResponse getEnrollmentByStudentId(Long idStudent) {
-        return enrollmentRepository.findByStudentId(idStudent)
+        return enrollmentRepository.findByStudent_idStudent(idStudent)
                 .map(enrollmentMapper::toResponse)
                 .orElseThrow(() -> new StudentByIdException());
     }
