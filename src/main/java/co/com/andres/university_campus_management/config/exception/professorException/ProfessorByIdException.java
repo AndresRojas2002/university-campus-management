@@ -11,13 +11,13 @@ package co.com.andres.university_campus_management.config.exception.professorExc
  * @version 1.0
  * @since 2024
  */
-public class ProfessorByIdNotExistException extends RuntimeException {
+public class ProfessorByIdException extends RuntimeException {
 
     /**
      * Constructor por defecto que inicializa la excepción con un mensaje
      * descriptivo del error.
      */
-    public ProfessorByIdNotExistException() {
+    public ProfessorByIdException() {
         super("EL PROFESOR CON ESTE ID NO EXISTE EN EL SISTEMA");
     }
     

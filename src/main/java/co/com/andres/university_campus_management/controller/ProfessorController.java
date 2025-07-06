@@ -17,9 +17,10 @@ import co.com.andres.university_campus_management.model.DTO.ProfessorRequest;
 import co.com.andres.university_campus_management.model.DTO.ProfessorResponse;
 import co.com.andres.university_campus_management.service.ProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -40,6 +41,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/profesor")
 @RequiredArgsConstructor
+@Tag(name = "Profesores", description = "API para la gestión de profesores universitarios")
 public class ProfessorController {
 
     private final ProfessorService professorService;
@@ -55,6 +57,7 @@ public class ProfessorController {
             @ApiResponse(responseCode = "201", description = "Profesor creado exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos del profesor inválidos"),
             @ApiResponse(responseCode = "409", description = "Email ya existente en el sistema"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -71,6 +74,7 @@ public class ProfessorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de profesores obtenida exitosamente"),
             @ApiResponse(responseCode = "204", description = "No hay profesores registrados"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
@@ -88,6 +92,7 @@ public class ProfessorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Profesor encontrado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Profesor no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
@@ -104,6 +109,7 @@ public class ProfessorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Profesor eliminado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Profesor no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
@@ -124,10 +130,11 @@ public class ProfessorController {
             @ApiResponse(responseCode = "400", description = "Datos del profesor inválidos"),
             @ApiResponse(responseCode = "404", description = "Profesor no encontrado"),
             @ApiResponse(responseCode = "409", description = "Email ya existente en el sistema"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    public ProfessorResponse update(@Valid @PathVariable("id") Long id, @RequestBody ProfessorRequest professorRequest) {
+    public ProfessorResponse update(@PathVariable("id") Long id, @Valid @RequestBody ProfessorRequest professorRequest) {
         return professorService.updateProfessor(id, professorRequest);
     }
 
@@ -141,6 +148,7 @@ public class ProfessorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "204", description = "No se encontraron profesores con ese nombre o apellido"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/buscar")

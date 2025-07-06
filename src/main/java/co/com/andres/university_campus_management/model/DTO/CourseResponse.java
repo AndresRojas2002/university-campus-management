@@ -58,6 +58,6 @@ public record CourseResponse(
          * Referencia a la clave primaria de la entidad Professor.
          */
         @Schema(description = "Identificador del profesor asignado", example = "1") 
-        Long professor) {
+        Long professorId) {
 
 }

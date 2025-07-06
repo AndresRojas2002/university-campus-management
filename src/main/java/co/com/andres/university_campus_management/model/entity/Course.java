@@ -6,7 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -66,8 +67,10 @@ public class Course {
      * Identificador del profesor asignado al curso.
      * Relación uno a muchos con la entidad Professor.
      */
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "professor")
-    private Long professor;
+    private Professor professor;
     
+
+
 }

@@ -66,10 +66,4 @@ public class Professor {
     @Column(name = "address", nullable = false)
     private String address;
 
-    /**
-     * Ciudad donde reside el profesor.
-     * Campo obligatorio que no puede ser nulo.
-     */
-    @Column(name = "city", nullable = false)
-    private String city;
 }

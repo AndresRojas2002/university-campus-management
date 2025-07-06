@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.andres.university_campus_management.model.DTO.CourseRequest;
 import co.com.andres.university_campus_management.model.DTO.CourseResponse;
 import co.com.andres.university_campus_management.service.CourseService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Controlador REST para la gestión de cursos en el sistema universitario.
@@ -40,6 +41,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/api/curso")
 @RequiredArgsConstructor
+@Tag(name = "Cursos", description = "API para la gestión de cursos universitarios")
 public class CourseController {
 
     private final CourseService courseService;
@@ -55,6 +57,7 @@ public class CourseController {
             @ApiResponse(responseCode = "201", description = "Curso creado exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos del curso inválidos"),
             @ApiResponse(responseCode = "409", description = "Código de curso ya existente en el sistema"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -71,6 +74,7 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de cursos obtenida exitosamente"),
             @ApiResponse(responseCode = "204", description = "No hay cursos registrados"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
@@ -88,6 +92,7 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Curso encontrado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Curso no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
@@ -108,6 +113,7 @@ public class CourseController {
             @ApiResponse(responseCode = "400", description = "Datos del curso inválidos"),
             @ApiResponse(responseCode = "404", description = "Curso no encontrado"),
             @ApiResponse(responseCode = "409", description = "Código de curso ya existente"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
@@ -124,6 +130,7 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Curso eliminado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Curso no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
@@ -141,6 +148,7 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "204", description = "No se encontraron cursos con ese nombre"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/buscarNombre")
@@ -158,6 +166,7 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "204", description = "No se encontraron cursos con ese código"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/buscarCode")

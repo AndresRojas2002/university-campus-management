@@ -1,0 +1,34 @@
+{
+  "ejemplo1_campos_vacios": {
+    "name": "",
+    "lastName": "",
+    "email": "",
+    "phone": "",
+    "address": ""
+  },
+  "ejemplo2_campos_null": {
+    "name": null,
+    "lastName": null,
+    "email": null,
+    "phone": null,
+    "address": null
+  },
+  "ejemplo3_email_invalido": {
+    "name": "Luis Andres",
+    "lastName": "Rojas Acevedo",
+    "email": "andres.rojas@gmail.com",
+    "phone": "3001234567",
+    "address": "Calle 123 #45-67, Barrio Centro, Ciudad"
+  },
+  "ejemplo4_telefono_invalido": {
+    "name": "Luis Andres",
+    "lastName": "Rojas Acevedo",
+    "email": "andres.rojas@universidad.com",
+    "phone": "abc123",
+    "address": "Calle 123 #45-67, Barrio Centro, Ciudad"
+  },
+  "ejemplo5_faltan_campos_obligatorios": {
+    "name": "Luis Andres",
+    "phone": "3001234567"
+  }
+} 
