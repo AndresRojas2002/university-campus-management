@@ -9,9 +9,9 @@ import co.com.andres.university_campus_management.config.exception.couseExceptio
 import co.com.andres.university_campus_management.config.exception.couseException.CourseCodeValidException;
 import co.com.andres.university_campus_management.config.exception.couseException.CourseMaxCapacityValidException;
 import co.com.andres.university_campus_management.config.exception.couseException.CourseWithCodeExistException;
-import co.com.andres.university_campus_management.config.exception.studentException.EmailValidException;
-import co.com.andres.university_campus_management.config.exception.studentException.NumberValidExeption;
-import co.com.andres.university_campus_management.config.exception.studentException.PhoneValidException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentWintEmailValidException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentWintNumberValidExeption;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentWintPhoneValidException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentByIdException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentNumberExistException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentWithEmailExistException;
@@ -44,7 +44,7 @@ public class GlobalExeptionHandler {
      * @return ResponseEntity con código 400 (BAD_REQUEST) y detalles del error
      */
     @ExceptionHandler
-    public ResponseEntity<ApiErrorResponse> HandlerEmailValidException(EmailValidException ex,
+    public ResponseEntity<ApiErrorResponse> HandlerEmailValidException(StudentWintEmailValidException ex,
             HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI()));
@@ -61,7 +61,7 @@ public class GlobalExeptionHandler {
      * @return ResponseEntity con código 400 (BAD_REQUEST) y detalles del error
      */
     @ExceptionHandler 
-    public ResponseEntity <ApiErrorResponse> HandlerNumberValidException(NumberValidExeption ex, HttpServletRequest request){
+    public ResponseEntity <ApiErrorResponse> HandlerNumberValidException(StudentWintNumberValidExeption ex, HttpServletRequest request){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
         .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST,ex.getMessage(),request.getRequestURI()));
     }
@@ -77,7 +77,7 @@ public class GlobalExeptionHandler {
      * @return ResponseEntity con código 400 (BAD_REQUEST) y detalles del error
      */
     @ExceptionHandler
-    public ResponseEntity<ApiErrorResponse> HandlerPhoneValidException(PhoneValidException ex,
+    public ResponseEntity<ApiErrorResponse> HandlerPhoneValidException(StudentWintPhoneValidException ex,
             HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request.getRequestURI()));

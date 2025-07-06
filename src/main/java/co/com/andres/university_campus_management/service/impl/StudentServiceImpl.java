@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import co.com.andres.university_campus_management.config.exception.studentException.EmailValidException;
-import co.com.andres.university_campus_management.config.exception.studentException.NumberValidExeption;
-import co.com.andres.university_campus_management.config.exception.studentException.PhoneValidException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentWintEmailValidException;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentWintNumberValidExeption;
+import co.com.andres.university_campus_management.config.exception.studentException.StudentWintPhoneValidException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentByIdException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentNumberExistException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentWithEmailExistException;
@@ -43,9 +43,9 @@ public class StudentServiceImpl implements StudentService {
      * 
      * @param studentRequest Datos del estudiante a crear
      * @return StudentResponse con la información del estudiante creado
-     * @throws EmailValidException si el formato del email no es válido
-     * @throws PhoneValidException si el formato del teléfono no es válido
-     * @throws NumberValidExeption si el formato del número de estudiante no es válido
+     * @throws StudentWintEmailValidException si el formato del email no es válido
+     * @throws StudentWintPhoneValidException si el formato del teléfono no es válido
+     * @throws StudentWintNumberValidExeption si el formato del número de estudiante no es válido
      * @throws StudentWithEmailExistException si el email ya existe en el sistema
      * @throws StudentNumberExistException si el número de estudiante ya existe en el sistema
      */
@@ -53,18 +53,18 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponse createStudent(StudentRequest studentRequest) {
         // Validar formato del email
         if (!studentRequest.isValidEmail()) {
-            throw new EmailValidException();
+            throw new StudentWintEmailValidException();
         }
 
         // Validar formato del teléfono si está presente
         if (studentRequest.phone() != null && !studentRequest.phone().equals("No especificado")
                 && !studentRequest.isValidPhone()) {
-            throw new PhoneValidException();
+            throw new StudentWintPhoneValidException();
         }
 
         // Validar formato del número de estudiante
         if (!studentRequest.isValidStudentNumber()) {
-            throw new NumberValidExeption();
+            throw new StudentWintNumberValidExeption();
         }
 
         // Verificar si el email ya existe
@@ -121,9 +121,9 @@ public class StudentServiceImpl implements StudentService {
      * @param studentRequest Nuevos datos del estudiante
      * @return StudentResponse con la información actualizada del estudiante
      * @throws StudentByIdException si no se encuentra un estudiante con el ID especificado
-     * @throws EmailValidException si el formato del email no es válido
-     * @throws PhoneValidException si el formato del teléfono no es válido
-     * @throws NumberValidExeption si el formato del número de estudiante no es válido
+     * @throws StudentWintEmailValidException si el formato del email no es válido
+     * @throws StudentWintPhoneValidException si el formato del teléfono no es válido
+     * @throws StudentWintNumberValidExeption si el formato del número de estudiante no es válido
      */
     @Override
     public StudentResponse updateStudent(Long id, StudentRequest studentRequest) {
@@ -135,18 +135,18 @@ public class StudentServiceImpl implements StudentService {
 
         // Validar formato del email
         if (!studentRequest.isValidEmail()) {
-            throw new EmailValidException();
+            throw new StudentWintEmailValidException();
         }
 
         // Validar formato del teléfono si está presente
         if (studentRequest.phone() != null && !studentRequest.phone().equals("No especificado")
                 && !studentRequest.isValidPhone()) {
-            throw new PhoneValidException();
+            throw new StudentWintPhoneValidException();
         }
 
         // Validar formato del número de estudiante
         if (!studentRequest.isValidStudentNumber()) {
-            throw new NumberValidExeption();
+            throw new StudentWintNumberValidExeption();
         }
 
         var entity = studentMapper.toEntity(studentRequest);

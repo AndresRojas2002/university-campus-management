@@ -12,13 +12,13 @@ package co.com.andres.university_campus_management.config.exception.studentExcep
  * @version 1.0
  * @since 2024
  */
-public class PhoneValidException extends RuntimeException {
+public class StudentWintPhoneValidException extends RuntimeException {
 
     /**
      * Constructor por defecto que inicializa la excepción con un mensaje
      * descriptivo sobre el formato requerido para el número de teléfono.
      */
-    public PhoneValidException (){
+    public StudentWintPhoneValidException (){
         super("EL NÚMERO DE TELÉFONO DEBE TENER FORMATO VÁLIDO (7-15 DÍGITOS)");
     }
     

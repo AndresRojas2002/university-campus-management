@@ -12,13 +12,13 @@ package co.com.andres.university_campus_management.config.exception.studentExcep
  * @version 1.0
  * @since 2024
  */
-public class NumberValidExeption extends RuntimeException{
+public class StudentWintNumberValidExeption extends RuntimeException{
     
     /**
      * Constructor por defecto que inicializa la excepción con un mensaje
      * descriptivo sobre el formato requerido para el número de estudiante.
      */
-    public NumberValidExeption (){
+    public StudentWintNumberValidExeption (){
         super("EL NÚMERO DE ESTUDIANTE DEBE TENER ENTRE 8 Y 10 DÍGITOS NUMÉRICOS");
     }
     
