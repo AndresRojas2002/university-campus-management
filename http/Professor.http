@@ -1,0 +1,41 @@
+### Obtener todos los profesores
+GET http://localhost:8080/api/v1/professors
+Content-Type: application/json
+
+### Obtener profesor por ID
+GET http://localhost:8080/api/v1/professors/1
+Content-Type: application/json
+
+### Crear nuevo profesor
+POST http://localhost:8080/api/v1/professors
+Content-Type: application/json
+
+{
+    "name": "Dr. María González",
+    "last_name": "López",
+    "email": "maria.gonzalez@universidad.com",
+    "phone": "3001234567",
+    "address": "Calle 123 #45-67, Barrio Centro, Ciudad",
+    
+}
+
+### Actualizar profesor
+PUT http://localhost:8080/api/v1/professors/1
+Content-Type: application/json
+
+{
+    "name": "Dr. María Elena González",
+    "last_name": "López Rodríguez",
+    "email": "maria.gonzalez@universidad.com",
+    "address": "Calle 123 #45-67, Barrio Centro, Ciudad",
+    "phone": "3001234567",
+}
+
+### Eliminar profesor
+DELETE http://localhost:8080/api/v1/professors/1
+
+### Buscar profesores por nombre
+GET http://localhost:8080/api/v1/professors/buscarNombre?n=María
+Content-Type: application/json
+
+

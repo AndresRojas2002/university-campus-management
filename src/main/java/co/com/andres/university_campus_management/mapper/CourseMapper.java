@@ -27,15 +27,15 @@ public interface CourseMapper {
      * @return Entidad Course mapeada
      */
     @Mapping(target = "idCourse", ignore = true)
-    Course toEntity(CourseRequest request); 
+    Course toEntity(CourseRequest request);
 
     /**
      * Convierte una entidad Course a un CourseResponse.
+     * Mapea el ID del profesor desde la relación con la entidad Professor.
      * 
      * @param course Entidad del curso a convertir
      * @return DTO de respuesta con los datos del curso
      */
-    @Mapping(target = "professorId", ignore = true)
+    @Mapping(target = "professorId", source = "professor.idProfessor")
     CourseResponse toResponse(Course course);
-    
 }

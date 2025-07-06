@@ -2,6 +2,7 @@ package co.com.andres.university_campus_management.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import co.com.andres.university_campus_management.model.entity.EnrollmentState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
@@ -40,7 +41,7 @@ public record StudentRequest(
             description = "Apellido del estudiante", 
             example = "Rojas Acevedo", 
             required = true) 
-        @JsonProperty("last_Name") 
+        @JsonProperty("last_name") 
         @NotBlank(message = "EL APELLIDO ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
         String lastName,
 
@@ -89,7 +90,18 @@ public record StudentRequest(
             required = true) 
         @JsonProperty("student_Number") 
         @NotBlank(message = "EL NÚMERO DE ESTUDIANTE ES UN CAMPO OBLIGATORIO Y DEBE TENER ENTRE 8 Y 10 DÍGITOS")
-        String studentNumber
+        String studentNumber,
+
+        /**
+         * Estado de la matrícula del estudiante.
+         * Campo obligatorio que define el estado actual de la matrícula.
+         */
+        @Schema(
+            description = "Estado de la matrícula del estudiante", 
+            example = "ACTIVE", 
+            required = true) 
+        @JsonProperty("enrollment_state") 
+        EnrollmentState enrollmentState
 
 ) {
 
@@ -100,6 +112,9 @@ public record StudentRequest(
     public StudentRequest {
         if (phone == null) {
             phone = "No especificado";
+        }
+        if (enrollmentState == null) {
+            enrollmentState = EnrollmentState.ACTIVE;
         }
     }
 

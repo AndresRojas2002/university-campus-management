@@ -1,0 +1,40 @@
+### Obtener todos los cursos
+GET http://localhost:8080/api/v1/courses
+Content-Type: application/json
+
+### Obtener curso por ID
+GET http://localhost:8080/api/v1/courses/1
+Content-Type: application/json
+
+### Crear nuevo curso
+POST http://localhost:8080/api/v1/courses
+Content-Type: application/json
+
+{
+    "name": "Programación Avanzada",
+    "course_code": "PROG-101",
+    "description": "Curso avanzado de programación orientada a objetos",
+    "maximum_capacity": 50
+}
+
+### Actualizar curso
+PUT http://localhost:8080/api/v1/courses/1
+Content-Type: application/json
+
+{
+    "name": "Programación Avanzada II",
+    "course_code": "PROG-102",
+    "description": "Curso avanzado de programación con patrones de diseño",
+    "maximum_capacity": 35
+}
+
+### Eliminar curso
+DELETE http://localhost:8080/api/v1/courses/1
+
+### Buscar cursos por nombre
+GET http://localhost:8080/api/v1/courses/buscar?b=Programación
+Content-Type: application/json
+
+### Buscar cursos por código
+GET http://localhost:8080/api/v1/courses/buscarCode?c=PROG
+Content-Type: application/json

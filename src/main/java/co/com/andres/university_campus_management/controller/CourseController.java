@@ -166,7 +166,7 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "204", description = "No se encontraron cursos con ese código"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/buscarCode")

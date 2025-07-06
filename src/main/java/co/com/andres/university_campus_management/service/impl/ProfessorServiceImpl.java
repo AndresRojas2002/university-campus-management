@@ -8,6 +8,7 @@ import co.com.andres.university_campus_management.config.exception.professorExce
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailExistException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailValidException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithPhoneValidException;
+import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithRoleValidException;
 import co.com.andres.university_campus_management.mapper.ProfessorMapper;
 import co.com.andres.university_campus_management.model.DTO.ProfessorRequest;
 import co.com.andres.university_campus_management.model.DTO.ProfessorResponse;
@@ -42,6 +43,10 @@ public class ProfessorServiceImpl implements ProfessorService {
             throw new ProfessorWithEmailValidException();
         }
 
+        if (!professorRequest.isValidRoles()) {
+            throw new ProfessorWithRoleValidException();
+        }
+        
         // Validar formato del teléfono
         if (!professorRequest.isValidPhone()) {
             throw new ProfessorWithPhoneValidException();

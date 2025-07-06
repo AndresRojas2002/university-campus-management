@@ -1,4 +1,4 @@
-package co.com.andres.university_campus_management.config;
+package co.com.andres.university_campus_management.config.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +18,7 @@ import co.com.andres.university_campus_management.config.exception.professorExce
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailExistException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailValidException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithPhoneValidException;
+import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithRoleValidException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentByIdException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentNumberExistException;
 import co.com.andres.university_campus_management.config.exception.studentException.StudentWintEmailValidException;
@@ -301,6 +302,25 @@ public class GlobalExeptionHandler {
         @ExceptionHandler
         public ResponseEntity<ApiErrorResponse> handlerProfessorWithPhoneValidException(
                         ProfessorWithPhoneValidException ex,
+                        HttpServletRequest request) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(),
+                                                request.getRequestURI()));
+        }
+
+        /**
+         * Maneja excepciones de validación de roles del profesor.
+         * 
+         * Se activa cuando los roles asignados al profesor no son válidos según
+         * las reglas de negocio del sistema (solo se permiten ROLE_PROFESOR y ROLE_ADMIN).
+         * 
+         * @param ex      La excepción ProfessorWithRoleValidException capturada
+         * @param request La solicitud HTTP que generó la excepción
+         * @return ResponseEntity con código 400 (BAD_REQUEST) y detalles del error
+         */
+        @ExceptionHandler
+        public ResponseEntity<ApiErrorResponse> handlerProfessorWithRoleValidException(
+                        ProfessorWithRoleValidException ex,
                         HttpServletRequest request) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                 .body(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(),

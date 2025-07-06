@@ -1,0 +1,44 @@
+### Obtener todos los estudiantes
+GET http://localhost:8080/api/v1/students
+Content-Type: application/json
+
+### Obtener estudiante por ID
+GET http://localhost:8080/api/v1/students/1
+Content-Type: application/json
+
+### Crear nuevo estudiante
+POST http://localhost:8080/api/v1/students
+Content-Type: application/json
+
+{
+    "name": "Juan Pérez",
+    "last_name": "Pérez",
+    "email": "juan.perez@universidad.com",
+    "phone": "3001234567",
+    "address": "Calle 123 #45-67, Bogotá",
+    "student_Number": "2024001234"
+}
+
+### Actualizar estudiante
+PUT http://localhost:8080/api/v1/students/1
+Content-Type: application/json
+
+{
+    "name": "Juan Carlos Pérez",
+    "last_name": "Pérez",
+    "email": "juan.carlos.perez@universidad.com",
+    "phone": "3001234568",
+    "address": "Calle 124 #46-68, Bogotá",
+    "student_Number": "2024001234"
+}
+
+### Eliminar estudiante
+DELETE http://localhost:8080/api/v1/students/1
+
+### Buscar estudiantes por nombre
+GET http://localhost:8080/api/v1/students/buscarNombre?n=Juan
+Content-Type: application/json
+
+### Buscar estudiantes por email
+GET http://localhost:8080/api/v1/students/buscarEmail?e=juan
+Content-Type: application/json

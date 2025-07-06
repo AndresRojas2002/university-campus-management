@@ -1,5 +1,7 @@
 package co.com.andres.university_campus_management.model.DTO;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -65,7 +67,17 @@ public record ProfessorRequest(
         required = true) 
     @JsonProperty("address")
     @NotBlank(message = "LA DIRECCIÓN ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
-    String address
+    String address,
+
+    @Schema(
+    description = "Lista de roles asignados al profesor. Ej: [\"ROLE_PROFESOR\", \"ROLE_ADMIN\"]",
+    example = "[\"ROLE_PROFESOR\"]",
+    required = false
+)
+    @JsonProperty("roles")
+    Set<String> roles
+
+
 ) {
     /**
      * Constructor compacto del record ProfessorRequest.
@@ -78,7 +90,30 @@ public record ProfessorRequest(
         if (phone == null) {
             phone = "no especificado";
         }
+        if (roles == null || roles.isEmpty()) {
+            roles = Set.of("ROLE_PROFESOR"); 
+        }
+    
+    
     }
+
+    /**
+    * Valida que los roles enviados sean válidos, ignorando mayúsculas o espacios.
+    * Acepta solo los roles: ROLE_PROFESOR y ROLE_ADMIN.
+    *
+    * @return true si todos los roles son válidos, false en caso contrario
+    */
+    public boolean isValidRoles() {
+    if (roles == null || roles.isEmpty()) {
+        return true; 
+    }
+
+    Set<String> rolesValidos = Set.of("ROLE_PROFESOR", "ROLE_ADMIN");
+
+    return roles.stream()
+        .map(rol -> rol.trim().toUpperCase())
+        .allMatch(rolesValidos::contains);
+}
 
 
       /**
