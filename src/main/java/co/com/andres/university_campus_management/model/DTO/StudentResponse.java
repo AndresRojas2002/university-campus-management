@@ -1,5 +1,7 @@
 package co.com.andres.university_campus_management.model.DTO;
 
+import java.util.Set;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -64,7 +66,18 @@ public record StudentResponse(
          * Campo único que identifica al estudiante en el sistema académico.
          */
         @Schema(description = "Número de identificación académica del estudiante", example = "2024001234") 
-        String studentNumber) {
+        String studentNumber,
+        
+        /**
+         * Roles asignados al estudiante en el sistema.
+         * Colección de roles que define los permisos y accesos
+         * que tiene el estudiante en la plataforma.
+         */
+        @Schema(description = "Roles del estudiante en el sistema", example = "[\"STUDENT\", \"ADMIN\"]") 
+        Set<String> roles
+        ) {
+
+        
 
 
 

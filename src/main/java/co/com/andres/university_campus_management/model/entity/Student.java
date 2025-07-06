@@ -82,6 +82,16 @@ public class Student {
     private String studentNumber;
 
     /**
+     * Contraseña del estudiante para autenticación en el sistema.
+     * Campo obligatorio que se almacena de forma encriptada por seguridad.
+     * No puede ser nulo y se utiliza para el proceso de login.
+     */
+    @Column(name = "password", nullable = false)
+    private String password;
+
+
+
+    /**
      * Roles asignados al estudiante en el sistema.
      * Colección de roles que define los permisos y accesos
      * que tiene el estudiante en la plataforma.
@@ -90,9 +100,7 @@ public class Student {
     @ElementCollection(fetch = FetchType.EAGER) 
     @CollectionTable(
         name = "student_roles", 
-        joinColumns = @JoinColumn(name = "student_id")
-    )
-    
+        joinColumns = @JoinColumn(name = "student_id"))
     @Column(name = "rol")
     private Set<String> roles;
 

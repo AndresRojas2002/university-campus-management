@@ -3,6 +3,7 @@ package co.com.andres.university_campus_management.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,6 +60,7 @@ public class StudentController {
             @ApiResponse(responseCode = "409", description = "Número de estudiante o email ya existentes en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasRole('ADMIN', 'PROFESOR')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public StudentResponse create(@Valid @RequestBody StudentRequest studentRequest) {
@@ -76,6 +78,7 @@ public class StudentController {
             @ApiResponse(responseCode = "204", description = "No hay estudiantes registrados"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<StudentResponse> getAll() {
@@ -94,6 +97,7 @@ public class StudentController {
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'ESTUDIANTE')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public StudentResponse getByIdStunt(@PathVariable("id") Long id) {
@@ -115,6 +119,7 @@ public class StudentController {
             @ApiResponse(responseCode = "409", description = "Número de estudiante o email ya existente en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public StudentResponse update(@Valid @PathVariable("id") Long id, @RequestBody StudentRequest studentRequest) {
@@ -132,6 +137,7 @@ public class StudentController {
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
@@ -149,6 +155,7 @@ public class StudentController {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
     @GetMapping("/buscar")
     public List<StudentResponse> getByNameOrLastName(@RequestParam("b") String text) {
         return studentService.getByNameOrLastName(text);

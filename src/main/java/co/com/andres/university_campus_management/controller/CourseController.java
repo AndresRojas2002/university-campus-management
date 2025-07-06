@@ -3,6 +3,7 @@ package co.com.andres.university_campus_management.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,11 +57,13 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Curso creado exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos del curso inválidos"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "409", description = "Código de curso ya existente en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR')")
     public CourseResponse create(@Valid @RequestBody CourseRequest request) {
         return courseService.createCourse(request);
     }
@@ -74,10 +77,12 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de cursos obtenida exitosamente"),
             @ApiResponse(responseCode = "204", description = "No hay cursos registrados"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR') or hasRole('STUDENT')")
     public List<CourseResponse> getAll() {
         return courseService.getAllCourse();
     }
@@ -91,11 +96,13 @@ public class CourseController {
     @Operation(summary = "Obtener curso por ID", description = "Busca un curso específico por su identificador")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Curso encontrado exitosamente"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Curso no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR') or hasRole('STUDENT')")
     public CourseResponse getById(@PathVariable("id") Long id) {
         return courseService.byIdCourse(id);
     }
@@ -111,12 +118,14 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Curso actualizado exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos del curso inválidos"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Curso no encontrado"),
             @ApiResponse(responseCode = "409", description = "Código de curso ya existente"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR')")
     public CourseResponse update(@PathVariable("id") Long id, @Valid @RequestBody CourseRequest courseRequest) {
         return courseService.updateCourse(id, courseRequest);
     }
@@ -129,11 +138,13 @@ public class CourseController {
     @Operation(summary = "Eliminar curso", description = "Elimina un curso del sistema")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Curso eliminado exitosamente"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Curso no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(@PathVariable Long id) {
         courseService.deleteCourse(id);
     }
@@ -148,10 +159,12 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "204", description = "No se encontraron cursos con ese nombre"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor"),
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/buscarNombre")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR') or hasRole('STUDENT')")
     public List<CourseResponse> getByName(@RequestParam("n") String text) {
         return courseService.getByName(text);
     }
@@ -166,6 +179,7 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "204", description = "No se encontraron cursos con ese código"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)

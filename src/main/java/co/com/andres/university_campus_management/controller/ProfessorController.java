@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import co.com.andres.university_campus_management.model.DTO.ProfessorRequest;
 import co.com.andres.university_campus_management.model.DTO.ProfessorResponse;
 import co.com.andres.university_campus_management.service.ProfessorService;
@@ -23,6 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * Controlador REST para la gestión de profesores en el sistema universitario.
@@ -59,6 +59,7 @@ public class ProfessorController {
             @ApiResponse(responseCode = "409", description = "Email ya existente en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ProfessorResponse create(@Valid @RequestBody ProfessorRequest professorRequest) {
@@ -76,6 +77,7 @@ public class ProfessorController {
             @ApiResponse(responseCode = "204", description = "No hay profesores registrados"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<ProfessorResponse> getAll() {
@@ -94,6 +96,7 @@ public class ProfessorController {
             @ApiResponse(responseCode = "404", description = "Profesor no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public ProfessorResponse getById(@PathVariable("id") Long id) {
@@ -111,6 +114,7 @@ public class ProfessorController {
             @ApiResponse(responseCode = "404", description = "Profesor no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
@@ -132,6 +136,7 @@ public class ProfessorController {
             @ApiResponse(responseCode = "409", description = "Email ya existente en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public ProfessorResponse update(@PathVariable("id") Long id, @Valid @RequestBody ProfessorRequest professorRequest) {
@@ -150,6 +155,7 @@ public class ProfessorController {
             @ApiResponse(responseCode = "204", description = "No se encontraron profesores con ese nombre o apellido"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/buscar")
     public List<ProfessorResponse> getByNameOrLastName(@RequestParam("b") String text) {

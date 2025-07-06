@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Schema(description = "DTO para la creación y actualización de profesores")
 public record ProfessorRequest(
@@ -72,10 +73,22 @@ public record ProfessorRequest(
     @Schema(
     description = "Lista de roles asignados al profesor. Ej: [\"ROLE_PROFESOR\", \"ROLE_ADMIN\"]",
     example = "[\"ROLE_PROFESOR\"]",
-    required = false
-)
+    required = false)
     @JsonProperty("roles")
-    Set<String> roles
+    Set<String> roles,
+
+    /**
+     * Contraseña del profesor para autenticación en el sistema.
+     * Campo obligatorio que debe tener al menos 8 caracteres.
+     */
+    @Schema(
+        description = "Contraseña del profesor para autenticación", 
+        example = "Profesor2024!", 
+        required = true) 
+    @JsonProperty("password") 
+    @NotBlank(message = "LA CONTRASEÑA ES UN CAMPO OBLIGATORIO")
+    @Size(min = 8, message = "LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES")
+    String password
 
 
 ) {

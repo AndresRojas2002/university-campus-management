@@ -1,10 +1,16 @@
 package co.com.andres.university_campus_management.model.entity;
 
+import java.util.Set;
+
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -65,5 +71,27 @@ public class Professor {
      */
     @Column(name = "address", nullable = false)
     private String address;
+
+   
+
+    /**
+     * Contraseña del profesor para acceso al sistema.
+     * Campo obligatorio que no puede ser nulo.
+     */
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    /**
+     * Roles asignados al profesor en el sistema.
+     * Colección de roles que define los permisos y accesos
+     * que tiene el profesor en la plataforma.
+     * Se carga de forma eager para optimizar consultas de autenticación y autorización.
+     */
+    @ElementCollection(fetch = FetchType.EAGER) 
+    @CollectionTable(
+        name = "professor_roles", 
+        joinColumns = @JoinColumn(name = "professor_id"))
+    @Column(name = "rol")
+    private Set<String> roles;
 
 }
