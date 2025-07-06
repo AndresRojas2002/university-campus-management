@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * Controlador REST para la gestión de estudiantes en el sistema universitario.
@@ -40,6 +41,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/api/estudiante")
 @RequiredArgsConstructor
+@Tag(name = "Estudiantes", description = "API para la gestión de estudiantes universitarios")
 public class StudentController {
 
     private final StudentService studentService;
@@ -55,7 +57,7 @@ public class StudentController {
             @ApiResponse(responseCode = "201", description = "Estudiante creado exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos del estudiante inválidos"),
             @ApiResponse(responseCode = "409", description = "Número de estudiante o email ya existentes en el sistema"),
-            
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -71,7 +73,8 @@ public class StudentController {
     @Operation(summary = "Obtener todos los estudiantes", description = "Obtiene la lista completa de estudiantes registrados")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de estudiantes obtenida exitosamente"),
-            @ApiResponse(responseCode = "204", description = "No hay estudiantes registrados")
+            @ApiResponse(responseCode = "204", description = "No hay estudiantes registrados"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
@@ -88,7 +91,8 @@ public class StudentController {
     @Operation(summary = "Obtener estudiante por ID", description = "Busca un estudiante específico por su identificador único")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Estudiante encontrado exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Estudiante no encontrado")
+            @ApiResponse(responseCode = "404", description = "Estudiante no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
@@ -108,7 +112,8 @@ public class StudentController {
             @ApiResponse(responseCode = "200", description = "Estudiante actualizado exitosamente"),
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado"),
             @ApiResponse(responseCode = "400", description = "Datos del estudiante inválidos"),
-            @ApiResponse(responseCode = "409", description = "Número de estudiante  o email ya existente en el sistema")
+            @ApiResponse(responseCode = "409", description = "Número de estudiante o email ya existente en el sistema"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
@@ -124,7 +129,8 @@ public class StudentController {
     @Operation(summary = "Eliminar estudiante", description = "Elimina un estudiante del sistema por su identificador único")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Estudiante eliminado exitosamente"),
-            @ApiResponse(responseCode = "404", description = "Estudiante no encontrado")
+            @ApiResponse(responseCode = "404", description = "Estudiante no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
@@ -140,7 +146,8 @@ public class StudentController {
      */
     @Operation(summary = "Buscar estudiantes por nombre o apellido", description = "Busca estudiantes cuyo nombre o apellido contenga el texto especificado")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente")
+            @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @GetMapping("/buscar")
     public List<StudentResponse> getByNameOrLastName(@RequestParam("b") String text) {

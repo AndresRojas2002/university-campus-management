@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import co.com.andres.university_campus_management.config.exception.professorException.ProfessorByIdNotExistException;
+import co.com.andres.university_campus_management.config.exception.professorException.ProfessorByIdException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailExistException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailValidException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithPhoneValidException;
@@ -77,26 +77,26 @@ public class ProfessorServiceImpl implements ProfessorService {
      * 
      * @param id ID del profesor a buscar
      * @return ProfessorResponse con los datos del profesor
-     * @throws ProfessorByIdNotExistException si el profesor no existe
+     * @throws ProfessorByIdException si el profesor no existe
      */
     @Override
     public ProfessorResponse getById(Long id) {
         return professorRepository.findById(id)
                 .map(professorMapper::toResponse)
-                .orElseThrow(() -> new ProfessorByIdNotExistException());
+                .orElseThrow(() -> new ProfessorByIdException());
     }
 
     /**
      * Elimina un profesor por su ID.
      * 
      * @param id ID del profesor a eliminar
-     * @throws ProfessorByIdNotExistException si el profesor no existe
+     * @throws ProfessorByIdException si el profesor no existe
      */
     @Override
     public void deleteProfessor(Long id) {
         var professorId = professorRepository.findById(id);
         if (!professorId.isPresent()) {
-            throw new ProfessorByIdNotExistException();
+            throw new ProfessorByIdException();
         }
         var professor = professorId.get();
 
@@ -109,7 +109,7 @@ public class ProfessorServiceImpl implements ProfessorService {
      * @param id ID del profesor a actualizar
      * @param professorRequest Nuevos datos del profesor
      * @return ProfessorResponse con los datos actualizados
-     * @throws ProfessorByIdNotExistException si el profesor no existe
+     * @throws ProfessorByIdException si el profesor no existe
      * @throws ProfessorWithEmailValidException si el email no es válido
      * @throws ProfessorWithPhoneValidException si el teléfono no es válido
      * @throws ProfessorWithEmailExistException si el email ya existe
@@ -119,7 +119,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         // Verificar que el profesor existe
         var idExist = professorRepository.findById(id);
         if (!idExist.isPresent()) {
-            throw new ProfessorByIdNotExistException();
+            throw new ProfessorByIdException();
         }
         
         // Validar formato del email
