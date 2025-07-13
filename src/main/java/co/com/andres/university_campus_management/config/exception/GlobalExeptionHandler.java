@@ -423,6 +423,47 @@ public class GlobalExeptionHandler {
                                                 request.getRequestURI()));
         }
 
+
+
+        // AUTHENTICACION 
+
+
+        /**
+         * Maneja la excepción cuando las credenciales del profesor son inválidas.
+         * 
+         * Se activa cuando el correo electrónico o la contraseña del profesor son incorrectos.
+         * 
+         * @param ex      La excepción InvalidCredentialsProfessorException capturada
+         * @param request La solicitud HTTP que generó la excepción
+         * @return ResponseEntity con código 401 (UNAUTHORIZED) y detalles del error
+         */
+        @ExceptionHandler
+        public ResponseEntity<ApiErrorResponse> handlerInvalidCredentialsProfessorException(
+                        co.com.andres.university_campus_management.config.exception.authenticate.InvalidCredentialsProfessorException ex,
+                        HttpServletRequest request) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                .body(new ApiErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(),
+                                                request.getRequestURI()));
+        }
+
+        /**
+         * Maneja la excepción cuando las credenciales del estudiante son inválidas.
+         * 
+         * Se activa cuando el correo electrónico o la contraseña del estudiante son incorrectos.
+         * 
+         * @param ex      La excepción InvalidCredentialsStudentException capturada
+         * @param request La solicitud HTTP que generó la excepción
+         * @return ResponseEntity con código 401 (UNAUTHORIZED) y detalles del error
+         */
+        @ExceptionHandler
+        public ResponseEntity<ApiErrorResponse> handlerInvalidCredentialsStudentException(
+                        co.com.andres.university_campus_management.config.exception.authenticate.InvalidCredentialsStudentException ex,
+                        HttpServletRequest request) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                .body(new ApiErrorResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(),
+                                                request.getRequestURI()));
+        }
+
         // ERRORES DE SERVIDOR
         /**
          * Maneja excepciones RuntimeException no capturadas específicamente.

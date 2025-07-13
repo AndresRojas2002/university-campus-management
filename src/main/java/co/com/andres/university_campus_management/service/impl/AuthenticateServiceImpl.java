@@ -3,10 +3,11 @@ package co.com.andres.university_campus_management.service.impl;
 import java.util.Optional;
 import java.util.Set;
 
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import co.com.andres.university_campus_management.config.exception.authenticate.InvalidCredentialsProfessorException;
+import co.com.andres.university_campus_management.config.exception.authenticate.InvalidCredentialsStudentException;
 import co.com.andres.university_campus_management.model.DTO.AuthenticateRequest;
 import co.com.andres.university_campus_management.model.DTO.AuthenticateResponse;
 import co.com.andres.university_campus_management.repository.ProfessorRepository;
@@ -34,7 +35,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
      */
     public AuthenticateResponse logginStudent(AuthenticateRequest request) {
         return autenticarStudent(request)
-            .orElseThrow(() -> new BadCredentialsException("Usuario o contraseña inválidos (estudiante)"));
+            .orElseThrow(() -> new InvalidCredentialsStudentException());
     }
 
     /**
@@ -43,7 +44,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
      */
     public AuthenticateResponse logginProfessor(AuthenticateRequest request) {
         return autenticarProfessor(request)
-            .orElseThrow(() -> new BadCredentialsException("Usuario o contraseña inválidos (profesor)"));
+            .orElseThrow(() -> new InvalidCredentialsProfessorException());
     }
 
     /**
