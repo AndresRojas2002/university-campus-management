@@ -19,36 +19,65 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticateServiceImpl implements AuthenticateService {
 
+    // Repositorio para estudiantes
     private final StudentRepository estudianteRepository;
+    // Repositorio para profesores
     private final ProfessorRepository profesorRepository;
+    // Codificador de contraseñas
     private final PasswordEncoder passwordEncoder;
+    // Utilidad para manejo de JWT
     private final JwtUtil jwtUtil;
 
-    @Override
-    public AuthenticateResponse loggin(AuthenticateRequest request) {
-        return autenticarEstudiante(request)
-            .or(() -> autenticarProfesor(request))
-            .orElseThrow(() -> new BadCredentialsException("Usuario o contraseña inválidos"));
+    /**
+     * Realiza el proceso de login para estudiantes.
+     * Si no se encuentra el usuario o la contraseña es incorrecta, lanza una excepción.
+     */
+    public AuthenticateResponse logginStudent(AuthenticateRequest request) {
+        return autenticarStudent(request)
+            .orElseThrow(() -> new BadCredentialsException("Usuario o contraseña inválidos (estudiante)"));
     }
 
-    private Optional<AuthenticateResponse> autenticarEstudiante(AuthenticateRequest request) {
+    /**
+     * Realiza el proceso de login para profesores.
+     * Si no se encuentra el usuario o la contraseña es incorrecta, lanza una excepción.
+     */
+    public AuthenticateResponse logginProfessor(AuthenticateRequest request) {
+        return autenticarProfessor(request)
+            .orElseThrow(() -> new BadCredentialsException("Usuario o contraseña inválidos (profesor)"));
+    }
+
+    /**
+     * Intenta autenticar al usuario como estudiante.
+     * @param request Solicitud de autenticación
+     * @return Optional con AuthenticateResponse si la autenticación es exitosa
+     */
+    private Optional<AuthenticateResponse> autenticarStudent(AuthenticateRequest request) {
+        // Busca el estudiante por email y verifica la contraseña
         return estudianteRepository.findByEmail(request.email())
             .filter(stud -> passwordEncoder.matches(request.password(), stud.getPassword()))
-            .map(stud -> generarToken(stud.getEmail(), stud.getRoles()));
+            .map(stud -> generateToken(stud.getEmail(), stud.getRoles()));
     }
 
-    private Optional<AuthenticateResponse> autenticarProfesor(AuthenticateRequest request) {
+    /**
+     * Intenta autenticar al usuario como profesor.
+     * @param request Solicitud de autenticación
+     * @return Optional con AuthenticateResponse si la autenticación es exitosa
+     */
+    private  Optional<AuthenticateResponse> autenticarProfessor(AuthenticateRequest request) {
+        // Busca el profesor por email y verifica la contraseña
         return profesorRepository.findByEmail(request.email())
             .filter(prof -> passwordEncoder.matches(request.password(), prof.getPassword()))
-            .map(prof -> generarToken(prof.getEmail(), prof.getRoles()));
+            .map(prof -> generateToken(prof.getEmail(), prof.getRoles()));
     }
 
-    private AuthenticateResponse generarToken(String email, Set<String> roles) {
+    /**
+     * Genera el token JWT y construye la respuesta de autenticación.
+     * @param email Email del usuario autenticado
+     * @param roles Roles del usuario
+     * @return AuthenticateResponse con el token JWT generado
+     */
+    private AuthenticateResponse generateToken(String email, Set<String> roles) {
         String token = jwtUtil.generateToken(email, roles);
         return new AuthenticateResponse(token);
     }
 }
-
-
-
-    

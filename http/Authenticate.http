@@ -1,0 +1,14 @@
+
+ 
+### Iniciar sesión como profesor
+POST http://localhost:8080/api/authenticate/professor
+Content-Type: application/json
+
+{
+    "email": "andres.rojas@universidad.com",
+    "password": "andres123"
+}
+
+
+
+

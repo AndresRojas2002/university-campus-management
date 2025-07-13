@@ -48,12 +48,14 @@ public class JwtUtil {
      */
     public String generateToken(String email, Set<String> roles) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", roles.stream().map(String::toUpperCase).toList());
+        claims.put("roles", roles.stream()
+        .map(String::toUpperCase)
+        .toList());
         return createToken(claims, email);
     }
 
     /**
-     * Extrae el nombre de usuario (email) del token JWT.
+     * Extrae el email del token JWT.
      * 
      * @param token Token JWT del cual extraer el usuario
      * @return Email del usuario o null si no se puede extraer
@@ -97,7 +99,8 @@ public class JwtUtil {
      * @return true si el token es válido, false en caso contrario
      */
     public boolean validateToken(String token, String email) {
-        return extractUsername(token).equals(email) && !isTokenExpired(token);
+        final var emails = extractUsername(token);
+        return (emails.equals(email))&& !isTokenExpired(token);
     }
 
     /**
@@ -118,8 +121,9 @@ public class JwtUtil {
      * @param resolver Función para resolver el claim específico
      * @return Valor del claim extraído
      */
-    public <T> T extractClaim(String token, Function<Claims, T> resolver) {
-        return resolver.apply(extractAllClaims(token));
+    public <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+        final var claims = extractAllClaims(token);
+        return claimResolver.apply(claims);
     }
 
     /**

@@ -49,7 +49,8 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
             .cors(cors -> cors.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
+            .requestMatchers("/authenticate/professor").permitAll()
+            .requestMatchers("/authenticate/student").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/cursos").permitAll()
                 .anyRequest().authenticated()
             )

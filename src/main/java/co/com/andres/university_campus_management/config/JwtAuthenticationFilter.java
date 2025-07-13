@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         // Extrae el encabezado de autorización de la solicitud
-        String authHeader = request.getHeader("Authorization");
+        var authHeader = request.getHeader("Authorization");
 
         // Si no hay encabezado de autorización o no comienza con "Bearer ", continúa con el filtro
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -71,8 +71,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // Extrae el token eliminando el prefijo "Bearer "
-        String token = authHeader.substring(7);
-        String email = jwtUtil.extractUsername(token);
+        var token = authHeader.substring(7);
+        var email = jwtUtil.extractUsername(token);
 
         // Verifica si se pudo extraer el email y no hay autenticación previa en el contexto
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {

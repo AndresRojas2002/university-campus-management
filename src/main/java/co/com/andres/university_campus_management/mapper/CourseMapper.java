@@ -22,11 +22,13 @@ public interface CourseMapper {
     /**
      * Convierte un CourseRequest a una entidad Course.
      * Ignora el campo idCourse ya que se genera automáticamente.
+     * Ignora el campo professor ya que no está incluido en CourseRequest.
      * 
      * @param request DTO con los datos del curso a crear
      * @return Entidad Course mapeada
      */
     @Mapping(target = "idCourse", ignore = true)
+    @Mapping(target = "professor", ignore = true)
     Course toEntity(CourseRequest request);
 
     /**

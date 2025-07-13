@@ -33,10 +33,12 @@ public interface EnrollmentMapper {
     /**
      * Convierte un EnrollmentRequest a una entidad Enrollment.
      * Ignora el campo idEnrollment ya que se genera automáticamente.
+     * Ignora el campo enrollmentState ya que no está incluido en EnrollmentRequest.
      * 
      * @param request DTO con los datos de la matrícula a crear
      * @return Entidad Enrollment mapeada
      */
     @Mapping(target = "idEnrollment", ignore = true)
+    @Mapping(target = "enrollmentState", ignore = true)
     Enrollment toEntity(EnrollmentRequest request);
 }

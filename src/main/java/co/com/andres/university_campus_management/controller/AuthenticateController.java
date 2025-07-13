@@ -2,7 +2,6 @@ package co.com.andres.university_campus_management.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.andres.university_campus_management.model.DTO.AuthenticateRequest;
@@ -21,8 +20,7 @@ import lombok.RequiredArgsConstructor;
  * @version 1.0
  * @since 2024
  */
-@RestController
-@RequestMapping("/api/autenticacion")
+@RestController 
 @RequiredArgsConstructor
 public class AuthenticateController {
 
@@ -32,9 +30,9 @@ public class AuthenticateController {
     private final AuthenticateService authenticateService;
 
     /**
-     * Endpoint para autenticar usuarios (estudiantes y profesores).
+     * Endpoint para autenticar estudiantes.
      * 
-     * Este método recibe las credenciales del usuario y devuelve un token JWT
+     * Este método recibe las credenciales del estudiante y devuelve un token JWT
      * si la autenticación es exitosa. El token contiene información del usuario
      * y sus roles para autorización posterior.
      * 
@@ -42,8 +40,24 @@ public class AuthenticateController {
      * @return Respuesta con el token JWT generado
      * @throws BadCredentialsException Si las credenciales son inválidas
      */
-    @PostMapping
-    public AuthenticateResponse authenticate(@Valid @RequestBody AuthenticateRequest body) {
-        return authenticateService.loggin(body);
+    @PostMapping("/authenticate/student")
+    public AuthenticateResponse authenticateStudent(@Valid @RequestBody AuthenticateRequest body) {
+        return authenticateService.logginStudent(body);
+    }
+
+    /**
+     * Endpoint para autenticar profesores.
+     * 
+     * Este método recibe las credenciales del profesor y devuelve un token JWT
+     * si la autenticación es exitosa. El token contiene información del usuario
+     * y sus roles para autorización posterior.
+     * 
+     * @param body Solicitud de autenticación con email y contraseña
+     * @return Respuesta con el token JWT generado
+     * @throws BadCredentialsException Si las credenciales son inválidas
+     */
+    @PostMapping("/authenticate/professor")
+    public AuthenticateResponse authenticateProfessor(@Valid @RequestBody AuthenticateRequest body) {
+        return authenticateService.logginProfessor(body);
     }
 }
