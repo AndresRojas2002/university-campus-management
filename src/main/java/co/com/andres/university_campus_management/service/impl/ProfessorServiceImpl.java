@@ -46,7 +46,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         if (!professorRequest.isValidRoles()) {
             throw new ProfessorWithRoleValidException();
         }
-        
+
         // Validar formato del teléfono
         if (!professorRequest.isValidPhone()) {
             throw new ProfessorWithPhoneValidException();
@@ -111,10 +111,10 @@ public class ProfessorServiceImpl implements ProfessorService {
     /**
      * Actualiza los datos de un profesor existente.
      * 
-     * @param id ID del profesor a actualizar
+     * @param id               ID del profesor a actualizar
      * @param professorRequest Nuevos datos del profesor
      * @return ProfessorResponse con los datos actualizados
-     * @throws ProfessorByIdException si el profesor no existe
+     * @throws ProfessorByIdException           si el profesor no existe
      * @throws ProfessorWithEmailValidException si el email no es válido
      * @throws ProfessorWithPhoneValidException si el teléfono no es válido
      * @throws ProfessorWithEmailExistException si el email ya existe
@@ -126,7 +126,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         if (!idExist.isPresent()) {
             throw new ProfessorByIdException();
         }
-        
+
         // Validar formato del email
         if (!professorRequest.isValidEmail()) {
             throw new ProfessorWithEmailValidException();
@@ -142,9 +142,9 @@ public class ProfessorServiceImpl implements ProfessorService {
         if (emailProfessor.isPresent() && !emailProfessor.get().getIdProfessor().equals(id)) {
             throw new ProfessorWithEmailExistException();
         }
-
-        // Actualizar la entidad manteniendo el ID original
+        // Se actualiza la entidad manteniendo el ID y la contraseña originales del profesor
         var entity = professorMapper.toEntity(professorRequest);
+        entity.setPassword(idExist.get().getPassword());
         entity.setIdProfessor(idExist.get().getIdProfessor());
 
         var update = professorRepository.save(entity);
@@ -153,7 +153,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     /**
-     * Busca profesores por nombre o apellido (búsqueda insensible a mayúsculas/minúsculas).
+     * Busca profesores por nombre o apellido (búsqueda insensible a
+     * mayúsculas/minúsculas).
      * 
      * @param text Texto a buscar en nombre o apellido
      * @return Lista de profesores que coinciden con la búsqueda

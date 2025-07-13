@@ -1,28 +1,28 @@
 ### Obtener todas las inscripciones
-GET http://localhost:8080/api/v1/enrollments
+GET http://localhost:8080/api/inscripcion
 Content-Type: application/json
 
 ### Obtener inscripción por ID
-GET http://localhost:8080/api/v1/enrollments/1
+GET http://localhost:8080/api/inscripcion/1
 Content-Type: application/json
 
 ### Crear nueva inscripción
 ### Estados disponibles: ACTIVE, COMPLETED, CANCELLED
-POST http://localhost:8080/api/v1/enrollments
+POST http://localhost:8080/api/inscripcion
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
 Content-Type: application/json
 
 {
     "student_id": 1,
     "course_id": 1,
-    "enrollment_date": "2024-01-15",
+    "enrollment_date": "2025-10-15",
     "status": "ACTIVE"
 }
 
 ### Actualizar inscripción
 ### Estados disponibles: ACTIVE, COMPLETED, CANCELLED
 
-
-PUT http://localhost:8080/api/v1/enrollments/1
+PUT http://localhost:8080/api/inscripcion/1
 Content-Type: application/json
 
 {
@@ -33,16 +33,16 @@ Content-Type: application/json
 }
 
 ### Eliminar inscripción
-DELETE http://localhost:8080/api/v1/enrollments/1
+DELETE http://localhost:8080/api/inscripcion/1
 
 ### Buscar inscripciones por estudiante
-GET http://localhost:8080/api/v1/enrollments/student/1
+GET http://localhost:8080/api/inscripcion/estudiante/1
 Content-Type: application/json
 
 ### Buscar inscripciones por curso
-GET http://localhost:8080/api/v1/enrollments/course/1
+GET http://localhost:8080/api/inscripcion/curso/1
 Content-Type: application/json
 
 ### Buscar inscripciones por estado
-GET http://localhost:8080/api/v1/enrollments/status/ACTIVE
+GET http://localhost:8080/api/inscripcion/estado/ACTIVE
 Content-Type: application/json

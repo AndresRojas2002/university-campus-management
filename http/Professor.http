@@ -1,13 +1,16 @@
 ### Obtener todos los profesores
-GET http://localhost:8080/api/v1/professors
+GET http://localhost:8080/api/profesor
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
 Content-Type: application/json
 
 ### Obtener profesor por ID
-GET http://localhost:8080/api/v1/professors/1
+GET http://localhost:8080/api/profesor/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
 Content-Type: application/json
 
 ### Crear nuevo profesor
-POST http://localhost:8080/api/v1/professors
+POST http://localhost:8080/api/profesor
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
 Content-Type: application/json
 
 {
@@ -16,26 +19,28 @@ Content-Type: application/json
     "email": "maria.gonzalez@universidad.com",
     "phone": "3001234567",
     "address": "Calle 123 #45-67, Barrio Centro, Ciudad",
-    
+    "password": "$2a$12$Ar9/n1jAYSP8rzVu5FsHh.JB130dYqHyFx1ayeTKNEHQZsbqTDxEe"
+ 
 }
 
 ### Actualizar profesor
-PUT http://localhost:8080/api/v1/professors/1
+PUT http://localhost:8080/api/profesor/2
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
 Content-Type: application/json
 
 {
     "name": "Dr. María Elena González",
     "last_name": "López Rodríguez",
     "email": "maria.gonzalez@universidad.com",
-    "address": "Calle 123 #45-67, Barrio Centro, Ciudad",
-    "phone": "3001234567",
+    "address": "Calle 34 , Barrio Centro, medellin",
+    "phone": "3001234567"
 }
 
 ### Eliminar profesor
-DELETE http://localhost:8080/api/v1/professors/1
+DELETE http://localhost:8080/api/profesor/1
 
 ### Buscar profesores por nombre
-GET http://localhost:8080/api/v1/professors/buscarNombre?n=María
+
+GET http://localhost:8080/api/profesor/buscar?b=maria
 Content-Type: application/json
-
-
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe

@@ -1,5 +1,6 @@
 package co.com.andres.university_campus_management.controller;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,20 +8,25 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.andres.university_campus_management.model.DTO.AuthenticateRequest;
 import co.com.andres.university_campus_management.model.DTO.AuthenticateResponse;
 import co.com.andres.university_campus_management.service.AuthenticateService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**
  * Controlador REST para la autenticación de usuarios.
  * 
- * Este controlador maneja las solicitudes de autenticación para estudiantes y profesores,
+ * Este controlador maneja las solicitudes de autenticación para estudiantes y
+ * profesores,
  * proporcionando un endpoint para el inicio de sesión que genera tokens JWT.
  * 
  * @author Andres
  * @version 1.0
  * @since 2024
  */
-@RestController 
+@RestController
 @RequiredArgsConstructor
 public class AuthenticateController {
 
@@ -40,7 +46,10 @@ public class AuthenticateController {
      * @return Respuesta con el token JWT generado
      * @throws BadCredentialsException Si las credenciales son inválidas
      */
-    @PostMapping("/authenticate/student")
+    @Operation(summary = "Autenticar estudiante", description = "Recibe las credenciales del estudiante y retorna un token JWT si la autenticación es exitosa.")
+    @ApiResponse(responseCode = "200", description = "Autenticación exitosa", content = @Content(schema = @Schema(implementation = AuthenticateResponse.class)))
+    @ApiResponse(responseCode = "401", description = "Credenciales inválidas")
+    @PostMapping("/authenticate/estudiante")
     public AuthenticateResponse authenticateStudent(@Valid @RequestBody AuthenticateRequest body) {
         return authenticateService.logginStudent(body);
     }
@@ -56,7 +65,10 @@ public class AuthenticateController {
      * @return Respuesta con el token JWT generado
      * @throws BadCredentialsException Si las credenciales son inválidas
      */
-    @PostMapping("/authenticate/professor")
+    @Operation(summary = "Autenticar profesor", description = "Recibe las credenciales del profesor y retorna un token JWT si la autenticación es exitosa.")
+    @ApiResponse(responseCode = "200", description = "Autenticación exitosa", content = @Content(schema = @Schema(implementation = AuthenticateResponse.class)))
+    @ApiResponse(responseCode = "401", description = "Credenciales inválidas")
+    @PostMapping("/authenticate/profesor")
     public AuthenticateResponse authenticateProfessor(@Valid @RequestBody AuthenticateRequest body) {
         return authenticateService.logginProfessor(body);
     }

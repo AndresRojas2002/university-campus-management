@@ -49,9 +49,18 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
             .cors(cors -> cors.disable())
             .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/authenticate/professor").permitAll()
-            .requestMatchers("/authenticate/student").permitAll()
+                .requestMatchers("/authenticate/profesor").permitAll()
+                .requestMatchers("/authenticate/estudiante").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/cursos").permitAll()
+                // Permitir acceso público a Swagger UI y recursos relacionados
+                .requestMatchers(
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**",
+                    "/v3/api-docs.yaml",
+                    "/swagger-resources/**",
+                    "/webjars/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

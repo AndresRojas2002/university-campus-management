@@ -70,10 +70,12 @@ public record ProfessorRequest(
     @NotBlank(message = "LA DIRECCIÓN ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
     String address,
 
+    // Campo que representa la lista de roles asignados al profesor.
+    // Si no se especifica, por defecto se asigna el rol "ROLE_PROFESOR".
     @Schema(
-    description = "Lista de roles asignados al profesor. Ej: [\"ROLE_PROFESOR\", \"ROLE_ADMIN\"]",
-    example = "[\"ROLE_PROFESOR\"]",
-    required = false)
+        description = "Lista de roles asignados al profesor. Ej: [\"ROLE_PROFESOR\", \"ROLE_ADMIN\"]",
+        example = "[\"ROLE_PROFESOR\"]",
+        required = false)
     @JsonProperty("roles")
     Set<String> roles,
 

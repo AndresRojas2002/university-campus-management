@@ -60,7 +60,7 @@ public class StudentController {
             @ApiResponse(responseCode = "409", description = "Número de estudiante o email ya existentes en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @PreAuthorize("hasRole('ADMIN', 'PROFESOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public StudentResponse create(@Valid @RequestBody StudentRequest studentRequest) {

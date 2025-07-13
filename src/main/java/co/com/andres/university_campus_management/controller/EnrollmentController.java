@@ -40,7 +40,7 @@ import lombok.RequiredArgsConstructor;
  * @since 2024
  */
 @RestController
-@RequestMapping("/api/enrollments")
+@RequestMapping("/api/inscripcion")
 @RequiredArgsConstructor
 @Tag(name = "Matrículas", description = "API para la gestión de matrículas universitarias")
 public class EnrollmentController {

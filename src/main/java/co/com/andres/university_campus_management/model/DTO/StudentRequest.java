@@ -105,6 +105,17 @@ public record StudentRequest(
         EnrollmentState enrollmentState,
 
         /**
+         * Rol asignado al estudiante.
+         * Por defecto, siempre será "ROLE_STUDENT".
+         */
+        @Schema(
+            description = "Rol asignado al estudiante. Siempre será 'ROLE_STUDENT'.",
+            example = "ROLE_STUDENT",
+            required = false)
+        @JsonProperty("role")
+        String role,
+
+        /**
          * Contraseña del estudiante para autenticación en el sistema.
          * Campo obligatorio que debe tener al menos 8 caracteres.
          */
@@ -122,6 +133,7 @@ public record StudentRequest(
     /**
      * Constructor compacto que asigna valores por defecto cuando phone es null.
      * Garantiza que todos los campos opcionales tengan valores válidos.
+     * Además, siempre asigna el rol "ROLE_STUDENT" al estudiante.
      */
     public StudentRequest {
         if (phone == null) {
@@ -130,6 +142,8 @@ public record StudentRequest(
         if (enrollmentState == null) {
             enrollmentState = EnrollmentState.ACTIVE;
         }
+        // Siempre asignar el rol "ROLE_STUDENT"
+        role = "ROLE_STUDENT";
     }
 
     /**

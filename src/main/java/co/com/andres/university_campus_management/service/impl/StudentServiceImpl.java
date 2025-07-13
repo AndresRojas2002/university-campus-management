@@ -149,7 +149,9 @@ public class StudentServiceImpl implements StudentService {
             throw new StudentWintNumberValidExeption();
         }
 
+        // Se mapea el DTO a la entidad y se conservan el ID y la contraseña originales
         var entity = studentMapper.toEntity(studentRequest);
+        entity.setPassword(idStudent.get().getPassword());
         entity.setIdStudent(idStudent.get().getIdStudent());
 
         var update = studentRepository.save(entity);
