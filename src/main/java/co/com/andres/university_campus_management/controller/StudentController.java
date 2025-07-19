@@ -60,7 +60,7 @@ public class StudentController {
             @ApiResponse(responseCode = "409", description = "Número de estudiante o email ya existentes en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public StudentResponse create(@Valid @RequestBody StudentRequest studentRequest) {
@@ -78,7 +78,7 @@ public class StudentController {
             @ApiResponse(responseCode = "204", description = "No hay estudiantes registrados"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<StudentResponse> getAll() {
@@ -97,7 +97,7 @@ public class StudentController {
             @ApiResponse(responseCode = "404", description = "Estudiante no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR', 'ESTUDIANTE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR', 'STUDENT')")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public StudentResponse getByIdStunt(@PathVariable("id") Long id) {
@@ -119,7 +119,7 @@ public class StudentController {
             @ApiResponse(responseCode = "409", description = "Número de estudiante o email ya existente en el sistema"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     public StudentResponse update(@Valid @PathVariable("id") Long id, @RequestBody StudentRequest studentRequest) {
@@ -155,7 +155,7 @@ public class StudentController {
             @ApiResponse(responseCode = "200", description = "Búsqueda realizada exitosamente"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     @GetMapping("/buscar")
     public List<StudentResponse> getByNameOrLastName(@RequestParam("b") String text) {
         return studentService.getByNameOrLastName(text);

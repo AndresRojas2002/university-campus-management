@@ -126,7 +126,7 @@ public class CourseController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR')")
-    public CourseResponse update(@PathVariable("id") Long id, @Valid @RequestBody CourseRequest courseRequest) {
+    public CourseResponse update( @Valid @PathVariable("id") Long id, @RequestBody CourseRequest courseRequest) {
         return courseService.updateCourse(id, courseRequest);
     }
 

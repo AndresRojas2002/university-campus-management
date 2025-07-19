@@ -312,7 +312,7 @@ public class GlobalExeptionHandler {
          * Maneja excepciones de validación de roles del profesor.
          * 
          * Se activa cuando los roles asignados al profesor no son válidos según
-         * las reglas de negocio del sistema (solo se permiten ROLE_PROFESOR y ROLE_ADMIN).
+         * las reglas de negocio del sistema (solo se permiten ROLE_PROFESSOR y ROLE_ADMIN).
          * 
          * @param ex      La excepción ProfessorWithRoleValidException capturada
          * @param request La solicitud HTTP que generó la excepción

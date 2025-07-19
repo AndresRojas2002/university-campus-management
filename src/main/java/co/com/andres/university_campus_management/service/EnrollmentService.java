@@ -64,14 +64,6 @@ public interface EnrollmentService {
      */
     EnrollmentResponse getEnrollmentById(Long idEnrollment);
 
-    /**
-     * Actualiza la información de una matrícula existente.
-     * 
-     * @param idEnrollment Identificador único de la matrícula a actualizar
-     * @param enrollmentRequest DTO con la información actualizada de la matrícula
-     * @return EnrollmentResponse DTO con la información de la matrícula actualizada
-     */
-    EnrollmentResponse updateEnrollment(Long idEnrollment, EnrollmentRequest enrollmentRequest);
 
     /**
      * Elimina una matrícula del sistema.

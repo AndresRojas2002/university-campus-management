@@ -4,62 +4,44 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import co.com.andres.university_campus_management.model.entity.Course;
-import co.com.andres.university_campus_management.model.entity.Student;
-
+import co.com.andres.university_campus_management.model.entity.EnrollmentState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
-/**
- * DTO (Data Transfer Object) que representa la solicitud de creación de
- * una matrícula estudiantil en el sistema de gestión universitaria.
- * 
- * Este record encapsula todos los datos necesarios para registrar una nueva
- * matrícula, incluyendo validaciones y métodos de utilidad para el procesamiento
- * de datos de inscripción académica.
- * 
- * @author Andres
- * @version 1.0
- * @since 2024
- */
-@Schema(description = "DTO para la creación de matrículas estudiantiles")
+@Schema(description = "DTO para la solicitud de matrículas")
 public record EnrollmentRequest(
 
-        /**
-         * Identificador único del estudiante.
-         * Campo obligatorio que no puede ser nulo.
-         */
-        @Schema(
-            description = "Identificador único del estudiante",
-            example = "1", 
-            required = true) 
-        @JsonProperty("student_id") 
-        @NotNull(message = "EL ID DEL ESTUDIANTE ES UN CAMPO OBLIGATORIO Y NO PUEDE SER NULO")
-        Student student,
+    /**
+     * Identificador del estudiante que se va a matricular.
+     */
+    @Schema(description = "ID del estudiante", example = "1")
+    @JsonProperty("student")
+    @NotNull(message = "EL ID DEL ESTUDIANTE ES OBLIGATORIO")
+    Long student,
 
-        /**
-         * Identificador único del curso.
-         * Campo obligatorio que no puede ser nulo.
-         */
-        @Schema(
-            description = "Identificador único del curso",
-            example = "1", 
-            required = true) 
-        @JsonProperty("course_id")
-        @NotNull(message = "EL ID DEL CURSO ES UN CAMPO OBLIGATORIO Y NO PUEDE SER NULO")
-        Course course,
+    /**
+     * Identificador del curso en el que se va a matricular.
+     */
+    @Schema(description = "ID del curso", example = "1")
+    @JsonProperty("course")
+    @NotNull(message = "EL ID DEL CURSO ES OBLIGATORIO")
+    Long course,
 
-        /**
-         * Fecha de matrícula del estudiante.
-         * Campo opcional que se establece por defecto con la fecha actual si es nulo.
-         */
-        @Schema(
-            description = "Fecha de matrícula del estudiante",
-            example = "2024-01-15", 
-            required = false) 
-        @JsonProperty("enrollment_date")
-        LocalDate enrollmentDate
+    /**
+     * Fecha en la que se realiza la matrícula.
+     */
+    @Schema(description = "Fecha de matrícula", example = "2024-01-15")
+    @JsonProperty("enrollment_date")
+    LocalDate enrollmentDate
 
+    ,
+    /**
+     * Estado de la matrícula.
+     * Puede ser ACTIVE, CANCELLED o GRADUATED.
+     */
+    @Schema(description = "Estado de la matrícula", example = "ACTIVE")
+    @JsonProperty("enrollment_state")
+    EnrollmentState enrollmentState
 ) {
 
     /**
@@ -70,25 +52,31 @@ public record EnrollmentRequest(
         if (enrollmentDate == null) {
             enrollmentDate = LocalDate.now();
         }
+        // Si el estado de la matrícula es nulo, se asigna el valor ACTIVE por defecto
+        if (enrollmentState == null) {
+            enrollmentState = EnrollmentState.ACTIVE;
+        }
     }
 
     /**
      * Valida que el ID del estudiante sea válido.
      * @return true si el ID es válido, false en caso contrario
      */
+    /**
+     * Valida que el ID del estudiante sea válido.
+     * @return true si el ID es válido, false en caso contrario
+     */
     public boolean isValidIdStudent() {
-        return student != null && student.getIdStudent() > 0;
+        return student != null && student > 0;
     }
-    
 
     /**
      * Valida que el ID del curso sea válido.
      * @return true si el ID es válido, false en caso contrario
      */
     public boolean isValidIdCourse() {
-        return course != null && course.getIdCourse() > 0;
+        return course != null && course > 0;
     }
-    
 
     /**
      * Valida que la fecha de matrícula sea válida y contenga un formato válido.

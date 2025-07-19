@@ -17,8 +17,7 @@ public record ProfessorRequest(
      */
     @Schema(
         description = "Nombre del profesor",
-        example = "Luis Andres", 
-        required = true) 
+        example = "Luis Andres") 
     @JsonProperty("name")
     @NotBlank(message = "EL NOMBRE ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
     String name,
@@ -29,8 +28,7 @@ public record ProfessorRequest(
      */
     @Schema(
         description = "Apellido del profesor", 
-        example = "Rojas Acevedo", 
-        required = true) 
+        example = "Rojas Acevedo") 
     @JsonProperty("last_name")
     @NotBlank(message = "EL APELLIDO ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
     String lastName,
@@ -41,8 +39,7 @@ public record ProfessorRequest(
      */
     @Schema(
         description = "Correo electrónico del profesor", 
-        example = "andres.rojas@universidad.com", 
-        required = true) 
+        example = "andres.rojas@universidad.com") 
     @JsonProperty("email")
     @NotBlank(message = "EL CORREO ELECTRÓNICO ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
     String email,
@@ -53,8 +50,7 @@ public record ProfessorRequest(
      */
     @Schema(
         description = "Número de teléfono del profesor", 
-        example = "3001234567", 
-        required = false) 
+        example = "3001234567") 
     @JsonProperty("phone")
     String phone,
 
@@ -64,18 +60,16 @@ public record ProfessorRequest(
      */
     @Schema(
         description = "Dirección del profesor", 
-        example = "Calle 123 #45-67, Barrio Centro, Ciudad", 
-        required = true) 
+        example = "Calle 123 #45-67, Barrio Centro, Ciudad") 
     @JsonProperty("address")
     @NotBlank(message = "LA DIRECCIÓN ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
     String address,
 
     // Campo que representa la lista de roles asignados al profesor.
-    // Si no se especifica, por defecto se asigna el rol "ROLE_PROFESOR".
+    // Si no se especifica, por defecto se asigna el rol "ROLE_PROFESSOR".
     @Schema(
-        description = "Lista de roles asignados al profesor. Ej: [\"ROLE_PROFESOR\", \"ROLE_ADMIN\"]",
-        example = "[\"ROLE_PROFESOR\"]",
-        required = false)
+        description = "Lista de roles asignados al profesor. Ej: [\"ROLE_PROFESSOR\", \"ROLE_ADMIN\"]",
+        example = "[\"ROLE_PROFESSOR\"]")
     @JsonProperty("roles")
     Set<String> roles,
 
@@ -85,8 +79,7 @@ public record ProfessorRequest(
      */
     @Schema(
         description = "Contraseña del profesor para autenticación", 
-        example = "Profesor2024!", 
-        required = true) 
+        example = "Profesor2024!") 
     @JsonProperty("password") 
     @NotBlank(message = "LA CONTRASEÑA ES UN CAMPO OBLIGATORIO")
     @Size(min = 8, message = "LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES")
@@ -106,7 +99,7 @@ public record ProfessorRequest(
             phone = "no especificado";
         }
         if (roles == null || roles.isEmpty()) {
-            roles = Set.of("ROLE_PROFESOR"); 
+            roles = Set.of("ROLE_PROFESSOR"); 
         }
     
     
@@ -114,7 +107,7 @@ public record ProfessorRequest(
 
     /**
     * Valida que los roles enviados sean válidos, ignorando mayúsculas o espacios.
-    * Acepta solo los roles: ROLE_PROFESOR y ROLE_ADMIN.
+    * Acepta solo los roles: ROLE_PROFESSOR y ROLE_ADMIN.
     *
     * @return true si todos los roles son válidos, false en caso contrario
     */
@@ -123,7 +116,7 @@ public record ProfessorRequest(
         return true; 
     }
 
-    Set<String> rolesValidos = Set.of("ROLE_PROFESOR", "ROLE_ADMIN");
+    Set<String> rolesValidos = Set.of("ROLE_PROFESSOR", "ROLE_ADMIN");
 
     return roles.stream()
         .map(rol -> rol.trim().toUpperCase())

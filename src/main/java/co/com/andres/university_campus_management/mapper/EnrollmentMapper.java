@@ -22,7 +22,7 @@ public interface EnrollmentMapper {
     /**
      * Convierte una entidad Enrollment a un EnrollmentResponse.
      * Mapea los IDs del estudiante y curso desde las relaciones con las entidades Student y Course.
-     * 
+     *
      * @param enrollment Entidad de la matrícula a convertir
      * @return DTO de respuesta con los datos de la matrícula
      */
@@ -40,5 +40,8 @@ public interface EnrollmentMapper {
      */
     @Mapping(target = "idEnrollment", ignore = true)
     @Mapping(target = "enrollmentState", ignore = true)
+    @Mapping(target = "student.idStudent", source = "student")
+    @Mapping(target = "course.idCourse", source = "course")
+    @Mapping(target = "enrollmentDate", source = "enrollmentDate")
     Enrollment toEntity(EnrollmentRequest request);
 }

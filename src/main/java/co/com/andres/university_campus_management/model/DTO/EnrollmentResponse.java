@@ -2,61 +2,47 @@ package co.com.andres.university_campus_management.model.DTO;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import co.com.andres.university_campus_management.model.entity.EnrollmentState;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "DTO para la respuesta de matrículas")
 public record EnrollmentResponse(
 
     /**
      * Identificador único de la matrícula.
      */
-    @Schema(
-        description = "Identificador único de la matrícula",
-        example = "1",
-        required = true
-    )
+    @Schema(description = "ID único de la matrícula", example = "1")
+    @JsonProperty("id_enrollment")
     Long idEnrollment,
 
     /**
-     * Identificador único del estudiante.
+     * Identificador del estudiante matriculado.
      */
-    @Schema(
-        description = "Identificador único del estudiante",
-        example = "1",
-        required = true
-    )   
+    @Schema(description = "ID del estudiante", example = "1")
+    @JsonProperty("student_id")
     Long studentId,
 
     /**
-     * Identificador único del curso.
+     * Identificador del curso en el que se matricula.
      */
-    @Schema(
-        description = "Identificador único del curso",
-        example = "1",
-        required = true
-    )
+    @Schema(description = "ID del curso", example = "1")
+    @JsonProperty("course_id")
     Long courseId,
 
     /**
-     * Fecha de matrícula del estudiante.
+     * Fecha en la que se realizó la matrícula.
      */
-    @Schema(
-        description = "Fecha de matrícula del estudiante",
-        example = "2024-01-15",
-        required = true
-    )
+    @Schema(description = "Fecha de matrícula", example = "2024-01-15")
+    @JsonProperty("enrollment_date")
     LocalDate enrollmentDate,
 
     /**
-     * Estado de la matrícula.
+     * Estado actual de la matrícula.
      */
-    @Schema(
-        description = "Estado de la matrícula",
-        example = "ACTIVE",
-        required = true
-    )
+    @Schema(description = "Estado de la matrícula", example = "ACTIVE")
+    @JsonProperty("enrollment_state")
     EnrollmentState enrollmentState
-
 ) {
-
 }

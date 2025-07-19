@@ -2,6 +2,7 @@ package co.com.andres.university_campus_management.service.impl;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorByIdException;
@@ -26,6 +27,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     private final ProfessorRepository professorRepository;
     private final ProfessorMapper professorMapper;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Crea un nuevo profesor después de validar sus datos.
@@ -60,6 +62,8 @@ public class ProfessorServiceImpl implements ProfessorService {
 
         // Crear y guardar la entidad
         var entity = professorMapper.toEntity(professorRequest);
+        // Encriptar la contraseña antes de guardar
+        entity.setPassword(passwordEncoder.encode(professorRequest.password()));
         var newProfessor = professorRepository.save(entity);
 
         return professorMapper.toResponse(newProfessor);
@@ -142,10 +146,18 @@ public class ProfessorServiceImpl implements ProfessorService {
         if (emailProfessor.isPresent() && !emailProfessor.get().getIdProfessor().equals(id)) {
             throw new ProfessorWithEmailExistException();
         }
-        // Se actualiza la entidad manteniendo el ID y la contraseña originales del profesor
+        
+        // Se actualiza la entidad manteniendo el ID y los roles originales del profesor
         var entity = professorMapper.toEntity(professorRequest);
-        entity.setPassword(idExist.get().getPassword());
         entity.setIdProfessor(idExist.get().getIdProfessor());
+        entity.setRoles(idExist.get().getRoles());
+        
+        // Encriptar la nueva contraseña si se proporciona, o mantener la existente
+        if (professorRequest.password() != null && !professorRequest.password().trim().isEmpty()) {
+            entity.setPassword(passwordEncoder.encode(professorRequest.password()));
+        } else {
+            entity.setPassword(idExist.get().getPassword());
+        }
 
         var update = professorRepository.save(entity);
 

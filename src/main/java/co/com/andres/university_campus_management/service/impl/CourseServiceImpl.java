@@ -8,6 +8,7 @@ import co.com.andres.university_campus_management.config.exception.couseExceptio
 import co.com.andres.university_campus_management.config.exception.couseException.CourseCodeValidException;
 import co.com.andres.university_campus_management.config.exception.couseException.CourseMaxCapacityValidException;
 import co.com.andres.university_campus_management.config.exception.couseException.CourseWithCodeExistException;
+import co.com.andres.university_campus_management.config.exception.professorException.CourseWithIdProfessorValidException;
 import co.com.andres.university_campus_management.mapper.CourseMapper;
 import co.com.andres.university_campus_management.model.DTO.CourseRequest;
 import co.com.andres.university_campus_management.model.DTO.CourseResponse;
@@ -49,6 +50,11 @@ public class CourseServiceImpl implements CourseService {
         // Validar formato del código del curso
         if (!courseRequest.isValidCourseCode()) {
             throw new CourseCodeValidException();
+        }
+        
+        // Validar si el ID del profesor es válido
+        if (!courseRequest.isValidProfessorId()) {
+            throw new CourseWithIdProfessorValidException();
         }
 
         // Validar capacidad máxima del curso
@@ -109,6 +115,11 @@ public class CourseServiceImpl implements CourseService {
             throw new CourseByIdException();
         }
 
+        // Validar si el ID del profesor es válido
+        if (!courseRequest.isValidProfessorId()) {
+            throw new CourseWithIdProfessorValidException();
+        }
+
         // Validar formato del código del curso
         if (!courseRequest.isValidCourseCode()) {
             throw new CourseCodeValidException();
@@ -119,9 +130,9 @@ public class CourseServiceImpl implements CourseService {
             throw new CourseMaxCapacityValidException();
         }
 
-        // Validar si el curso ya está registrado 
+        // Validar si el curso ya está registrado, pero debe ignorar el del mismo ID (actualización)
         var existingCourse = courseRepository.findByCourseCode(courseRequest.courseCode());
-        if (existingCourse.isPresent()) {
+        if (existingCourse.isPresent() && !existingCourse.get().getIdCourse().equals(id)) {
             throw new CourseWithCodeExistException();
         }
 

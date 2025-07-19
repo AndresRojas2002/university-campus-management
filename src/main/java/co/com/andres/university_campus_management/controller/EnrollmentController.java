@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -145,27 +144,6 @@ public class EnrollmentController {
         return enrollmentService.getEnrollmentByCourseId(idCourse);
     }
 
-    /**
-     * Actualiza la información de una matrícula existente.
-     * 
-     * @param id Identificador único de la matrícula a actualizar
-     * @param enrollmentRequest Datos actualizados de la matrícula
-     * @return EnrollmentResponse con la información de la matrícula actualizada
-     */
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR')")
-    @Operation(summary = "Actualizar matrícula", description = "Actualiza la información de una matrícula existente")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Matrícula actualizada exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos"),
-            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
-            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    public EnrollmentResponse update(@PathVariable Long id, @Valid @RequestBody EnrollmentRequest enrollmentRequest) {
-        return enrollmentService.updateEnrollment(id, enrollmentRequest);
-    }
 
     /**
      * Elimina una matrícula del sistema.

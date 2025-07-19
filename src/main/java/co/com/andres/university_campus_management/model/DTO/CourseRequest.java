@@ -4,69 +4,58 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-
-/**
- * DTO (Data Transfer Object) que representa la solicitud de creación o
- * actualización de un curso en el sistema de gestión universitaria.
- * 
- * Este record encapsula todos los datos necesarios para registrar un nuevo
- * curso o actualizar la información de uno existente, incluyendo validaciones y
- * métodos de utilidad para el procesamiento de datos.
- * 
- * @author Andres
- * @version 1.0
- * @since 2024
- */
 @Schema(description = "DTO para la creación y actualización de cursos")
 public record CourseRequest(
         
-        /**
-         * Nombre del curso.
-         * Campo obligatorio que no puede estar vacío.
-         */
-        @Schema(
-            description = "Nombre del curso",
-            example = "Programación Avanzada", 
-            required = true) 
-        @JsonProperty("name") 
-        @NotBlank(message = "EL NOMBRE ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
-        String name,
+    /**
+     * Nombre del curso.
+     */
+    @Schema(
+        description = "Nombre del curso",
+        example = "Programación Avanzada") 
+    @JsonProperty("name") 
+    @NotBlank(message = "EL NOMBRE ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
+    String name,
 
-        /**
-         * Código único del curso.
-         * Campo obligatorio que no puede estar vacío.
-         * Debe seguir el formato: 3-4 letras mayúsculas seguido de un guión y 3 dígitos.
-         */
-        @Schema(
-            description = "Código único del curso", 
-            example = "PROG-101", 
-            required = true) 
-        @JsonProperty("course_code") 
-        @NotBlank(message = "EL CÓDIGO DEL CURSO ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
-        String courseCode,
+    /**
+     * Código único del curso.
+     */
+    @Schema(
+        description = "Código único del curso", 
+        example = "PROG-101") 
+    @JsonProperty("course_code") 
+    @NotBlank(message = "EL CÓDIGO DEL CURSO ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
+    String courseCode,
 
-        /**
-         * Descripción detallada del curso.
-         * Campo opcional que se establece por defecto si es nulo.
-         */
-        @Schema(
-            description = "Descripción detallada del curso", 
-            example = "Curso avanzado de programación orientada a objetos", 
-            required = false) 
-        @JsonProperty("description") 
-        String description,
+    /**
+     * Descripción detallada del curso.
+     */
+    @Schema(
+        description = "Descripción detallada del curso", 
+        example = "Curso avanzado de programación orientada a objetos") 
+    @JsonProperty("description") 
+    String description,
 
-        /**
-         * Capacidad máxima de estudiantes que pueden inscribirse al curso.
-         * Campo opcional que debe estar entre 1 y 200 estudiantes.
-         */
-        @Schema(
-            description = "Capacidad máxima de estudiantes", 
-            example = "30", 
-            required = false) 
-        @JsonProperty("maximum_capacity") 
-        Integer maxCapacity) {
+    /**
+     * Identificador único del profesor que imparte el curso.
+     */
+    @Schema(
+        description = "Identificador único del profesor",
+        example = "5")
+    @JsonProperty("professor_id")
+    @NotNull(message = "EL ID DEL PROFESOR ES UN CAMPO OBLIGATORIO Y NO PUEDE SER NULO")
+    Long professorId,
+
+    /**
+     * Capacidad máxima de estudiantes que pueden inscribirse al curso.
+     */
+    @Schema(
+        description = "Capacidad máxima de estudiantes", 
+        example = "30") 
+    @JsonProperty("maximum_capacity") 
+    Integer maxCapacity) {
 
     /**
      * Constructor compacto que valida y establece valores por defecto
@@ -104,9 +93,13 @@ public record CourseRequest(
         return maxCapacity != null && maxCapacity >= 1 && maxCapacity <= 50;
     }
 
-
-
-           
-
-           
+    /**
+     * Valida que el ID del profesor sea válido.
+     * El ID debe ser distinto de nulo y mayor que cero.
+     * 
+     * @return true si el ID del profesor es válido, false en caso contrario
+     */
+    public boolean isValidProfessorId() {
+        return professorId != null && professorId > 0;
+    }
 }
