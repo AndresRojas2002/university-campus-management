@@ -1,0 +1,26 @@
+
+ 
+### Iniciar sesión como profesor
+POST http://localhost:8080/authenticate/professor
+Content-Type: application/json
+
+{
+    "email": "andres.rojas@universidad.com",
+    "password": "andres123"
+}
+
+
+### Iniciar sesión como estudiante
+POST http://localhost:8080/authenticate/estudiante
+Content-Type: application/json
+
+{
+    "email": "juan.perez@universidad.com",
+    "password": "juan123"
+}
+
+
+
+
+
+

@@ -128,50 +128,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .orElseThrow(() -> new StudentByIdException());
     }
 
-    /**
-     * Actualiza una matrícula existente en el sistema.
-     * 
-     * Realiza validaciones del ID del curso, ID del estudiante y fecha de matrícula
-     * antes de proceder con la actualización.
-     * 
-     * @param idEnrollment ID de la matrícula a actualizar
-     * @param enrollmentRequest Nuevos datos de la matrícula
-     * @return EnrollmentResponse con la información de la matrícula actualizada
-     * @throws EnrollmentByIdException si no se encuentra una matrícula con el ID especificado
-     * @throws EnrollmentWithIdCourseValidException si el ID del curso no es válido
-     * @throws EnrollmentWithIdSudentValidException si el ID del estudiante no es válido
-     * @throws EnrollmentWithDateValidException si la fecha de matrícula no es válida
-     */
-    @Override
-    public EnrollmentResponse updateEnrollment(Long idEnrollment, EnrollmentRequest enrollmentRequest) {
-        // Verificar que la matrícula existe
-        var existingEnrollment = enrollmentRepository.findById(idEnrollment)
-                .orElseThrow(() -> new EnrollmentByIdException());
-
-        // Validación del ID del curso
-        if (!enrollmentRequest.isValidIdCourse()) {
-            throw new EnrollmentWithIdCourseValidException();
-        }
-
-        // Validación del ID del estudiante
-        if (!enrollmentRequest.isValidIdStudent()) {
-            throw new EnrollmentWithIdSudentValidException();
-        }
-
-        // Validación de la fecha de matrícula
-        if (!enrollmentRequest.isValidEnrollmentDate()) {
-            throw new EnrollmentWithDateValidException();
-        }
-
-        // Conversión a entidad y actualización
-        var entity = enrollmentMapper.toEntity(enrollmentRequest);
-        entity.setIdEnrollment(existingEnrollment.getIdEnrollment());
-
-        var updatedEnrollment = enrollmentRepository.save(entity);
-
-        return enrollmentMapper.toResponse(updatedEnrollment);
-    }
-
+    
     /**
      * Elimina una matrícula del sistema.
      * 

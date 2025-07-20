@@ -2,8 +2,10 @@ package co.com.andres.university_campus_management.model.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import co.com.andres.university_campus_management.model.entity.EnrollmentState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * DTO (Data Transfer Object) que representa la solicitud de creación o
@@ -40,7 +42,7 @@ public record StudentRequest(
             description = "Apellido del estudiante", 
             example = "Rojas Acevedo", 
             required = true) 
-        @JsonProperty("last_Name") 
+        @JsonProperty("last_name") 
         @NotBlank(message = "EL APELLIDO ES UN CAMPO OBLIGATORIO Y NO PUEDE ESTAR VACÍO")
         String lastName,
 
@@ -89,18 +91,59 @@ public record StudentRequest(
             required = true) 
         @JsonProperty("student_Number") 
         @NotBlank(message = "EL NÚMERO DE ESTUDIANTE ES UN CAMPO OBLIGATORIO Y DEBE TENER ENTRE 8 Y 10 DÍGITOS")
-        String studentNumber
+        String studentNumber,
+
+        /**
+         * Estado de la matrícula del estudiante.
+         * Campo obligatorio que define el estado actual de la matrícula.
+         */
+        @Schema(
+            description = "Estado de la matrícula del estudiante", 
+            example = "ACTIVE", 
+            required = true) 
+        @JsonProperty("enrollment_state") 
+        EnrollmentState enrollmentState,
+
+        /**
+         * Rol asignado al estudiante.
+         * Por defecto, siempre será "ROLE_STUDENT".
+         */
+        @Schema(
+            description = "Rol asignado al estudiante. Siempre será 'ROLE_STUDENT'.",
+            example = "ROLE_STUDENT",
+            required = false)
+        @JsonProperty("role")
+        String role,
+
+        /**
+         * Contraseña del estudiante para autenticación en el sistema.
+         * Campo obligatorio que debe tener al menos 8 caracteres.
+         */
+        @Schema(
+            description = "Contraseña del estudiante para autenticación", 
+            example = "Estudiante2024!", 
+            required = true) 
+        @JsonProperty("password") 
+        @NotBlank(message = "LA CONTRASEÑA ES UN CAMPO OBLIGATORIO")
+        @Size(min = 8, message = "LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES")
+        String password
 
 ) {
 
     /**
      * Constructor compacto que asigna valores por defecto cuando phone es null.
      * Garantiza que todos los campos opcionales tengan valores válidos.
+     * Además, siempre asigna el rol "ROLE_STUDENT" al estudiante.
      */
     public StudentRequest {
         if (phone == null) {
             phone = "No especificado";
         }
+        if (enrollmentState == null) {
+            enrollmentState = EnrollmentState.ACTIVE;
+        }
+        // Siempre asignar el rol "ROLE_STUDENT"
+        role = "ROLE_STUDENT";
     }
 
     /**

@@ -3,11 +3,11 @@ package co.com.andres.university_campus_management.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,7 +39,7 @@ import lombok.RequiredArgsConstructor;
  * @since 2024
  */
 @RestController
-@RequestMapping("/api/enrollments")
+@RequestMapping("/api/inscripcion")
 @RequiredArgsConstructor
 @Tag(name = "Matrículas", description = "API para la gestión de matrículas universitarias")
 public class EnrollmentController {
@@ -54,10 +54,12 @@ public class EnrollmentController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR')")
     @Operation(summary = "Crear matrícula", description = "Crea una nueva matrícula en el sistema")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Matrícula creada exitosamente"),
             @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public EnrollmentResponse create(@Valid @RequestBody EnrollmentRequest enrollmentRequest) {
@@ -71,9 +73,11 @@ public class EnrollmentController {
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR')")
     @Operation(summary = "Obtener todas las matrículas", description = "Retorna una lista con todas las matrículas registradas")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de matrículas obtenida exitosamente"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public List<EnrollmentResponse> getAll() {
@@ -88,9 +92,11 @@ public class EnrollmentController {
      */
     @GetMapping("/{idEnrollment}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR') or hasRole('STUDENT')")
     @Operation(summary = "Obtener matrícula por ID", description = "Busca una matrícula específica por su identificador único")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Matrícula encontrada exitosamente"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
@@ -106,9 +112,11 @@ public class EnrollmentController {
      */
     @GetMapping("/student/{idStudent}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR') or hasRole('STUDENT')")
     @Operation(summary = "Obtener matrícula por estudiante", description = "Busca una matrícula específica por el ID del estudiante")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Matrícula encontrada exitosamente"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
@@ -124,9 +132,11 @@ public class EnrollmentController {
      */
     @GetMapping("/course/{idCourse}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROFESSOR')")
     @Operation(summary = "Obtener matrícula por curso", description = "Busca una matrícula específica por el ID del curso")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Matrícula encontrada exitosamente"),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado"),
             @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
@@ -134,25 +144,6 @@ public class EnrollmentController {
         return enrollmentService.getEnrollmentByCourseId(idCourse);
     }
 
-    /**
-     * Actualiza la información de una matrícula existente.
-     * 
-     * @param id Identificador único de la matrícula a actualizar
-     * @param enrollmentRequest Datos actualizados de la matrícula
-     * @return EnrollmentResponse con la información de la matrícula actualizada
-     */
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Actualizar matrícula", description = "Actualiza la información de una matrícula existente")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Matrícula actualizada exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos"),
-            @ApiResponse(responseCode = "404", description = "Matrícula no encontrada"),
-            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
-    })
-    public EnrollmentResponse update(@PathVariable Long id, @Valid @RequestBody EnrollmentRequest enrollmentRequest) {
-        return enrollmentService.updateEnrollment(id, enrollmentRequest);
-    }
 
     /**
      * Elimina una matrícula del sistema.
@@ -161,6 +152,7 @@ public class EnrollmentController {
      */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Eliminar matrícula", description = "Elimina una matrícula del sistema")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Matrícula eliminada exitosamente"),

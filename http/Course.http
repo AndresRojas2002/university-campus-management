@@ -1,0 +1,44 @@
+### Obtener todos los cursos
+GET http://localhost:8080/api/curso
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
+Content-Type: application/json
+
+### Obtener curso por ID
+GET http://localhost:8080/api/curso/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
+Content-Type: application/json
+
+### Crear nuevo curso
+POST http://localhost:8080/api/curso
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
+Content-Type: application/json
+
+{
+    "name": "Programación Avanzada",
+    "course_code": "PROG-101",
+    "description": "Curso avanzado de programación orientada a objetos",
+    "maximum_capacity": 50
+}
+
+### Actualizar curso
+PUT http://localhost:8080/api/curso/1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJST0xFX1BST0ZFU09SIiwiUk9MRV9BRE1JTiJdLCJzdWIiOiJhbmRyZXMucm9qYXNAdW5pdmVyc2lkYWQuY29tIiwiaWF0IjoxNzUyMzc4MzM0LCJleHAiOjE3NTI0NjQ3MzR9.GUozM_Obfil9F2u6YCJ3ADaHVPL1Y1t2_z-hpsr2-RrDSx9cfDEKtJ4Eqe06EaGe
+Content-Type: application/json
+
+{
+    "name": "Programación Avanzada",
+    "course_code": "PROG-101",
+    "description": "Curso avanzado de programación con patrones de diseño",
+    "maximum_capacity": 35
+}
+
+### Eliminar curso
+DELETE http://localhost:8080/api/curso/1
+
+### Buscar cursos por nombre
+GET http://localhost:8080/api/curso/buscarNombre?n=Programación
+Content-Type: application/json
+
+### Buscar cursos por código
+GET http://localhost:8080/api/curso/buscarCodigo?c=PROG
+Content-Type: application/json

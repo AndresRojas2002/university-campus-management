@@ -2,6 +2,7 @@ package co.com.andres.university_campus_management.service.impl;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import co.com.andres.university_campus_management.config.exception.studentException.StudentWintEmailValidException;
@@ -34,12 +35,14 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Crea un nuevo estudiante en el sistema con validaciones completas.
      * 
      * Realiza validaciones de formato para email, teléfono y número de estudiante,
-     * verifica la unicidad de email y número de estudiante, y persiste la entidad.
+     * verifica la unicidad de email y número de estudiante, encripta la contraseña
+     * y persiste la entidad.
      * 
      * @param studentRequest Datos del estudiante a crear
      * @return StudentResponse con la información del estudiante creado
@@ -80,6 +83,8 @@ public class StudentServiceImpl implements StudentService {
         }
 
         var entity = studentMapper.toEntity(studentRequest);
+        // Encriptar la contraseña antes de guardar
+        entity.setPassword(passwordEncoder.encode(studentRequest.password()));
         var newStudent = studentRepository.save(entity);
 
         return studentMapper.toResponse(newStudent);
@@ -115,7 +120,8 @@ public class StudentServiceImpl implements StudentService {
      * Actualiza la información de un estudiante existente.
      * 
      * Realiza validaciones de formato y verifica la existencia del estudiante
-     * antes de proceder con la actualización.
+     * antes de proceder con la actualización. Si se proporciona una nueva contraseña,
+     * la encripta antes de guardar.
      * 
      * @param id Identificador único del estudiante a actualizar
      * @param studentRequest Nuevos datos del estudiante
@@ -149,8 +155,17 @@ public class StudentServiceImpl implements StudentService {
             throw new StudentWintNumberValidExeption();
         }
 
+        // Se mapea el DTO a la entidad y se conservan el ID y los roles originales del estudiante
         var entity = studentMapper.toEntity(studentRequest);
         entity.setIdStudent(idStudent.get().getIdStudent());
+        entity.setRoles(idStudent.get().getRoles());
+        
+        // Encriptar la nueva contraseña si se proporciona, o mantener la existente
+        if (studentRequest.password() != null && !studentRequest.password().trim().isEmpty()) {
+            entity.setPassword(passwordEncoder.encode(studentRequest.password()));
+        } else {
+            entity.setPassword(idStudent.get().getPassword());
+        }
 
         var update = studentRepository.save(entity);
         return studentMapper.toResponse(update);

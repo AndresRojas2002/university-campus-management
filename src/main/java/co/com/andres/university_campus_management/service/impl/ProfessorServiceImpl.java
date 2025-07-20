@@ -2,12 +2,14 @@ package co.com.andres.university_campus_management.service.impl;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorByIdException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailExistException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithEmailValidException;
 import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithPhoneValidException;
+import co.com.andres.university_campus_management.config.exception.professorException.ProfessorWithRoleValidException;
 import co.com.andres.university_campus_management.mapper.ProfessorMapper;
 import co.com.andres.university_campus_management.model.DTO.ProfessorRequest;
 import co.com.andres.university_campus_management.model.DTO.ProfessorResponse;
@@ -25,6 +27,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     private final ProfessorRepository professorRepository;
     private final ProfessorMapper professorMapper;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Crea un nuevo profesor después de validar sus datos.
@@ -42,6 +45,10 @@ public class ProfessorServiceImpl implements ProfessorService {
             throw new ProfessorWithEmailValidException();
         }
 
+        if (!professorRequest.isValidRoles()) {
+            throw new ProfessorWithRoleValidException();
+        }
+
         // Validar formato del teléfono
         if (!professorRequest.isValidPhone()) {
             throw new ProfessorWithPhoneValidException();
@@ -55,6 +62,8 @@ public class ProfessorServiceImpl implements ProfessorService {
 
         // Crear y guardar la entidad
         var entity = professorMapper.toEntity(professorRequest);
+        // Encriptar la contraseña antes de guardar
+        entity.setPassword(passwordEncoder.encode(professorRequest.password()));
         var newProfessor = professorRepository.save(entity);
 
         return professorMapper.toResponse(newProfessor);
@@ -106,10 +115,10 @@ public class ProfessorServiceImpl implements ProfessorService {
     /**
      * Actualiza los datos de un profesor existente.
      * 
-     * @param id ID del profesor a actualizar
+     * @param id               ID del profesor a actualizar
      * @param professorRequest Nuevos datos del profesor
      * @return ProfessorResponse con los datos actualizados
-     * @throws ProfessorByIdException si el profesor no existe
+     * @throws ProfessorByIdException           si el profesor no existe
      * @throws ProfessorWithEmailValidException si el email no es válido
      * @throws ProfessorWithPhoneValidException si el teléfono no es válido
      * @throws ProfessorWithEmailExistException si el email ya existe
@@ -121,7 +130,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         if (!idExist.isPresent()) {
             throw new ProfessorByIdException();
         }
-        
+
         // Validar formato del email
         if (!professorRequest.isValidEmail()) {
             throw new ProfessorWithEmailValidException();
@@ -137,10 +146,18 @@ public class ProfessorServiceImpl implements ProfessorService {
         if (emailProfessor.isPresent() && !emailProfessor.get().getIdProfessor().equals(id)) {
             throw new ProfessorWithEmailExistException();
         }
-
-        // Actualizar la entidad manteniendo el ID original
+        
+        // Se actualiza la entidad manteniendo el ID y los roles originales del profesor
         var entity = professorMapper.toEntity(professorRequest);
         entity.setIdProfessor(idExist.get().getIdProfessor());
+        entity.setRoles(idExist.get().getRoles());
+        
+        // Encriptar la nueva contraseña si se proporciona, o mantener la existente
+        if (professorRequest.password() != null && !professorRequest.password().trim().isEmpty()) {
+            entity.setPassword(passwordEncoder.encode(professorRequest.password()));
+        } else {
+            entity.setPassword(idExist.get().getPassword());
+        }
 
         var update = professorRepository.save(entity);
 
@@ -148,7 +165,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     /**
-     * Busca profesores por nombre o apellido (búsqueda insensible a mayúsculas/minúsculas).
+     * Busca profesores por nombre o apellido (búsqueda insensible a
+     * mayúsculas/minúsculas).
      * 
      * @param text Texto a buscar en nombre o apellido
      * @return Lista de profesores que coinciden con la búsqueda

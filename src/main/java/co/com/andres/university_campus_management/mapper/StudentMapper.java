@@ -27,6 +27,7 @@ public interface StudentMapper {
      * @return Entidad Student mapeada
      */
     @Mapping(target = "idStudent", ignore = true)
+    @Mapping(target = "roles", expression = "java(Set.of(\"ROLE_STUDENT\"))")
     Student toEntity(StudentRequest request);
 
     /**
@@ -36,5 +37,5 @@ public interface StudentMapper {
      * @return DTO de respuesta con los datos del estudiante
      */
     StudentResponse toResponse(Student student);
-    
+
 }

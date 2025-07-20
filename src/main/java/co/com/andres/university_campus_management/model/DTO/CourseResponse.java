@@ -1,5 +1,6 @@
 package co.com.andres.university_campus_management.model.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -19,45 +20,44 @@ public record CourseResponse(
 
         /**
          * Identificador único del curso.
-         * Clave primaria generada automáticamente.
          */
-        @Schema(description = "Identificador único del curso", example = "1", required = true) 
+        @Schema(description = "ID único del curso", example = "1")
+        @JsonProperty("id_course")
         Long idCourse,
 
         /**
          * Nombre del curso.
-         * Campo obligatorio que identifica el curso.
          */
-        @Schema(description = "Nombre del curso", example = "Programación Avanzada") 
+        @Schema(description = "Nombre del curso", example = "Programación Avanzada")
+        @JsonProperty("name")
         String name,
 
         /**
          * Código único del curso.
-         * Campo obligatorio que sigue el formato: 3-4 letras mayúsculas seguido de un
-         * guión y 3 dígitos.
          */
-        @Schema(description = "Código único del curso", example = "PROG-101") 
+        @Schema(description = "Código único del curso", example = "PROG-101")
+        @JsonProperty("course_code")
         String courseCode,
 
         /**
          * Descripción detallada del curso.
-         * Campo que proporciona información adicional sobre el contenido del curso.
          */
-        @Schema(description = "Descripción detallada del curso", example = "Curso avanzado de programación orientada a objetos") 
+        @Schema(description = "Descripción detallada del curso", example = "Curso avanzado de programación orientada a objetos")
+        @JsonProperty("description")
         String description,
 
         /**
          * Capacidad máxima de estudiantes que pueden inscribirse al curso.
-         * Campo que define el límite de estudiantes permitidos.
          */
         @Schema(description = "Capacidad máxima de estudiantes", example = "30")
+        @JsonProperty("max_capacity")
         Integer maxCapacity,
 
         /**
          * Identificador del profesor asignado al curso.
-         * Referencia a la clave primaria de la entidad Professor.
          */
-        @Schema(description = "Identificador del profesor asignado", example = "1") 
+        @Schema(description = "Identificador del profesor asignado", example = "1")
+        @JsonProperty("professor_id")
         Long professorId) {
 
 }

@@ -1,4 +1,4 @@
-package co.com.andres.university_campus_management.config;
+package co.com.andres.university_campus_management.config.exception;
 
 import java.time.LocalDateTime;
 

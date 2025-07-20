@@ -1,5 +1,8 @@
 package co.com.andres.university_campus_management.model.DTO;
 
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -19,52 +22,62 @@ public record StudentResponse(
 
         /**
          * Identificador único del estudiante.
-         * Clave primaria generada automáticamente.
          */
-        @Schema(description = "Identificador único del estudiante", example = "1", required = true) 
+        @Schema(description = "ID único del estudiante", example = "1")
+        @JsonProperty("id_student")
         Long idStudent,
 
         /**
          * Nombre del estudiante.
-         * Campo obligatorio que identifica al estudiante.
          */
-        @Schema(description = "Nombre del estudiante", example = "Luis Andres") 
+        @Schema(description = "Nombre del estudiante", example = "Luis Andres")
+        @JsonProperty("name")
         String name,
 
         /**
          * Apellido del estudiante.
-         * Campo obligatorio que identifica al estudiante.
          */
-        @Schema(description = "Apellido del estudiante", example = "Rojas Acevedo") 
+        @Schema(description = "Apellido del estudiante", example = "Rojas Acevedo")
+        @JsonProperty("last_name")
         String lastName,
 
         /**
          * Correo electrónico del estudiante.
-         * Campo obligatorio que debe tener formato válido de email universitario.
          */
-        @Schema(description = "Correo electrónico del estudiante", example = "andres.rojas@universidad.com") 
+        @Schema(description = "Correo electrónico del estudiante", example = "andres.rojas@universidad.com")
+        @JsonProperty("email")
         String email,
 
         /**
          * Dirección de residencia del estudiante.
-         * Campo que proporciona información de ubicación del estudiante.
          */
-        @Schema(description = "Dirección de residencia del estudiante", example = "Calle 123 #45-67, Barrio Centro, Ciudad") 
+        @Schema(description = "Dirección de residencia del estudiante", example = "Calle 123 #45-67, Barrio Centro, Ciudad")
+        @JsonProperty("address")
         String address,
 
         /**
          * Número de teléfono del estudiante.
-         * Campo que permite contacto directo con el estudiante.
          */
-        @Schema(description = "Número de teléfono del estudiante", example = "3001234567") 
+        @Schema(description = "Número de teléfono del estudiante", example = "3001234567")
+        @JsonProperty("phone")
         String phone,
 
         /**
          * Número de identificación académica del estudiante.
-         * Campo único que identifica al estudiante en el sistema académico.
          */
-        @Schema(description = "Número de identificación académica del estudiante", example = "2024001234") 
-        String studentNumber) {
+        @Schema(description = "Número de identificación académica del estudiante", example = "2024001234")
+        @JsonProperty("student_number")
+        String studentNumber,
+        
+        /**
+         * Roles asignados al estudiante en el sistema.
+         */
+        @Schema(description = "Roles del estudiante en el sistema", example = "[\"ROLE_STUDENT\"]")
+        @JsonProperty("roles")
+        Set<String> roles
+        ) {
+
+        
 
 
 
